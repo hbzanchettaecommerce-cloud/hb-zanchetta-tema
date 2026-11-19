@@ -1,0 +1,10 @@
+# Arquivos soltos na raiz (referências, prints) não vão para o tema
+/*.png
+/*.jpg
+/*.jpeg
+/*.webp
+/*.psd
+/*.pdf
+.DS_Store
+Thumbs.db
+node_modules/

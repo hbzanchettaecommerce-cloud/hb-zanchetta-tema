@@ -1,0 +1,120 @@
+{%- liquid
+  assign threshold = settings.free_shipping_threshold | times: 100
+  assign pix = settings.pix_discount | default: 0
+  assign pix_pct = 100 | minus: pix
+  assign pix_total = cart.total_price | times: pix_pct | divided_by: 100
+-%}
+<div class="wrap cart-page">
+  <nav class="crumbs" aria-label="Você está em"><a href="{{ routes.root_url }}">Início</a> / <span>Carrinho</span></nav>
+  <h1 class="disp">Meu carrinho</h1>
+
+  {%- if cart.item_count > 0 -%}
+    <form action="{{ routes.cart_url }}" method="post" id="cart-form" class="cart-layout" novalidate>
+      <div>
+        {%- if threshold > 0 -%}
+          {%- liquid
+            assign remaining = threshold | minus: cart.total_price
+            assign pct = cart.total_price | times: 100 | divided_by: threshold
+            if pct > 100
+              assign pct = 100
+            endif
+          -%}
+          <div class="ship-bar">
+            {%- if remaining > 0 -%}
+              Faltam <b>{{ remaining | money }}</b> para você ganhar <b>frete grátis</b>.
+            {%- else -%}
+              Parabéns! Seu pedido tem <b>frete grátis</b>.
+            {%- endif -%}
+            <div class="ship-track" aria-hidden="true"><span style="width: {{ pct }}%;"></span></div>
+          </div>
+        {%- endif -%}
+
+        {%- for item in cart.items -%}
+          <div class="ci">
+            <a class="ci-img" href="{{ item.url }}">
+              {%- if item.image -%}
+                {{ item.image | image_url: width: 200 | image_tag: loading: 'lazy', alt: '' }}
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
+              {%- endif -%}
+            </a>
+            <div class="ci-info">
+              <a class="ci-name" href="{{ item.url }}">{{ item.product.title }}</a>
+              {%- unless item.product.has_only_default_variant -%}<small>{{ item.variant.title }}</small>{%- endunless -%}
+              {%- for prop in item.properties -%}
+                {%- assign first_char = prop.first | slice: 0 -%}
+                {%- if prop.last != blank and first_char != '_' -%}<small>{{ prop.first }}: {{ prop.last }}</small>{%- endif -%}
+              {%- endfor -%}
+              <small>{{ item.final_price | money }} cada</small>
+              <div class="ci-ctrl">
+                <div class="qty">
+                  <button type="button" data-qty-btn="-1" aria-label="Diminuir quantidade">−</button>
+                  <input type="number" name="updates[]" id="qty-{{ item.key }}" value="{{ item.quantity }}" min="0" aria-label="Quantidade de {{ item.product.title | escape }}">
+                  <button type="button" data-qty-btn="1" aria-label="Aumentar quantidade">+</button>
+                </div>
+                <a class="ci-remove" href="{{ item.url_to_remove }}">Remover</a>
+              </div>
+            </div>
+            <div class="ci-price">
+              {%- if item.original_line_price > item.final_line_price -%}<s>{{ item.original_line_price | money }}</s>{%- endif -%}
+              {{ item.final_line_price | money }}
+              {%- for d in item.line_level_discount_allocations -%}
+                <div class="ci-disc">{{ d.discount_application.title }} (−{{ d.amount | money }})</div>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endfor -%}
+        <p><a class="cart-continue" href="{{ routes.all_products_collection_url }}">← Continuar comprando</a></p>
+      </div>
+
+      <aside class="summary">
+        <h2 class="disp">Resumo</h2>
+        <div class="sum-row"><span>Subtotal</span><span>{{ cart.items_subtotal_price | money }}</span></div>
+        {%- for d in cart.cart_level_discount_applications -%}
+          <div class="sum-row" style="color: var(--pix);"><span>{{ d.title }}</span><span>−{{ d.total_allocated_amount | money }}</span></div>
+        {%- endfor -%}
+
+        <div class="ship-est" data-ship-est>
+          <label for="cep">Calcular frete</label>
+          <div class="ship-est-row">
+            <input class="input" id="cep" type="text" inputmode="numeric" autocomplete="postal-code" placeholder="00000-000" maxlength="9">
+            <button class="btn btn-b" type="button">Calcular</button>
+          </div>
+          <div class="ship-out" aria-live="polite"></div>
+        </div>
+
+        <div class="sum-row sum-total"><span>Total</span><strong>{{ cart.total_price | money }}</strong></div>
+        {%- if pix > 0 -%}
+          <div class="sum-row pix"><span>Pagando no Pix</span><span>{{ pix_total | money }}</span></div>
+        {%- endif -%}
+        <div class="sum-row inst" style="justify-content: flex-end;">ou em até {{ settings.installments_max }}x sem juros no cartão</div>
+
+        {%- if section.settings.show_note -%}
+          <div class="field cart-note">
+            <label for="cart-note">Observações do pedido</label>
+            <textarea class="textarea" id="cart-note" name="note">{{ cart.note }}</textarea>
+          </div>
+        {%- endif -%}
+
+        <button class="visually-hidden" type="submit" name="update" tabindex="-1">Atualizar carrinho</button>
+        <button class="btn btn-y btn-lg btn-block" type="submit" name="checkout">Finalizar compra</button>
+        <div class="secure-note">{% render 'icon', name: 'lock', size: 14 %} Pagamento 100% seguro</div>
+      </aside>
+    </form>
+  {%- else -%}
+    <div class="empty">
+      <h2>Seu carrinho está vazio</h2>
+      <p>Que tal dar uma olhada nos mais vendidos?</p>
+      <a class="btn btn-y" href="{{ routes.all_products_collection_url }}">Ver produtos</a>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Carrinho",
+  "settings": [
+    { "type": "checkbox", "id": "show_note", "label": "Campo de observações do pedido", "default": false }
+  ]
+}
+{% endschema %}

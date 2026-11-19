@@ -1,0 +1,58 @@
+{%- if section.blocks.size > 0 -%}
+<section class="cats">
+  <div class="wrap">
+    {%- if section.settings.title != blank -%}<h2 class="disp">{{ section.settings.title }}</h2>{%- endif -%}
+    <div class="cat-row" style="--cols: {{ section.blocks.size }};">
+      {%- for block in section.blocks -%}
+        {%- assign c = block.settings.collection -%}
+        <a class="cat" href="{{ c.url | default: routes.collections_url }}" {{ block.shopify_attributes }}>
+          <span class="cat-disc">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 300 | image_tag: loading: 'lazy', alt: '' }}
+            {%- elsif c.featured_image -%}
+              {{ c.featured_image | image_url: width: 300 | image_tag: loading: 'lazy', alt: '' }}
+            {%- else -%}
+              {{ 'collection-' | append: forloop.index | placeholder_svg_tag: 'placeholder' }}
+            {%- endif -%}
+          </span>
+          {{ block.settings.label | default: c.title | default: 'Categoria' }}
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Categorias em círculo",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título (opcional)" }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Categoria",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Coleção" },
+        { "type": "image_picker", "id": "image", "label": "Imagem (opcional)", "info": "Quadrada. Se vazio, usa a imagem da coleção." },
+        { "type": "text", "id": "label", "label": "Nome (opcional)", "info": "Se vazio, usa o nome da coleção." }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Categorias em círculo",
+      "blocks": [
+        { "type": "category", "settings": { "label": "Torrado" } },
+        { "type": "category", "settings": { "label": "Japonês" } },
+        { "type": "category", "settings": { "label": "Crocante" } },
+        { "type": "category", "settings": { "label": "Pastas" } },
+        { "type": "category", "settings": { "label": "Doces & Paçoca" } },
+        { "type": "category", "settings": { "label": "Kits" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

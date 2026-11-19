@@ -1,0 +1,84 @@
+{%- if section.blocks.size > 0 -%}
+<section class="hero">
+  <div class="wrap">
+    <div class="slider" data-slider data-autoplay="{{ section.settings.autoplay }}" data-speed="{{ section.settings.speed }}" aria-roledescription="carrossel" aria-label="Destaques">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign loading = 'lazy'
+          if forloop.first
+            assign loading = 'eager'
+          endif
+          assign img_alt = block.settings.alt | default: shop.name | escape
+        -%}
+        <div class="slide{% if forloop.first %} on{% endif %}{% if block.settings.text_style == 'dark' %} dark-text{% endif %}" {{ block.shopify_attributes }}
+          style="--slide-bg: {{ block.settings.bg }}; --slide-fg: {% if block.settings.text_style == 'dark' %}var(--ink){% else %}#fff{% endif %};">
+          {%- if block.settings.image != blank -%}
+            {%- if block.settings.link != blank -%}<a class="slide-img" href="{{ block.settings.link }}">{%- else -%}<div class="slide-img">{%- endif -%}
+              <picture>
+                {%- if block.settings.image_mobile != blank -%}
+                  <source media="(max-width: 749px)" srcset="{{ block.settings.image_mobile | image_url: width: 900 }}">
+                {%- endif -%}
+                {{ block.settings.image | image_url: width: 2400 | image_tag: widths: '750,1100,1500,1920,2400', sizes: '(min-width: 1240px) 1240px, 100vw', alt: img_alt, loading: loading }}
+              </picture>
+            {%- if block.settings.link != blank -%}</a>{%- else -%}</div>{%- endif -%}
+          {%- else -%}
+            <div class="slide-text">
+              <div class="slide-copy">
+                {%- if block.settings.eyebrow != blank -%}<span class="eyebrow">{{ block.settings.eyebrow }}</span>{%- endif -%}
+                {%- if block.settings.heading != blank -%}<h2 class="disp">{{ block.settings.heading }}</h2>{%- endif -%}
+                {%- if block.settings.text != blank -%}<p>{{ block.settings.text }}</p>{%- endif -%}
+                {%- if block.settings.button_label != blank -%}
+                  <a class="btn {% if block.settings.text_style == 'dark' %}btn-b{% else %}btn-y{% endif %}" href="{{ block.settings.link | default: routes.all_products_collection_url }}">{{ block.settings.button_label }} →</a>
+                {%- endif -%}
+              </div>
+              <div class="slide-side">
+                {%- if block.settings.image_side != blank -%}
+                  {{ block.settings.image_side | image_url: width: 900 | image_tag: widths: '450,700,900', sizes: '(min-width: 820px) 50vw, 90vw', alt: '', loading: loading }}
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+      <button class="sl-arrow sl-prev" type="button" aria-label="Banner anterior">{% render 'icon', name: 'chevron-left', size: 18 %}</button>
+      <button class="sl-arrow sl-next" type="button" aria-label="Próximo banner">{% render 'icon', name: 'chevron-right', size: 18 %}</button>
+      <div class="dots"></div>
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Banner principal",
+  "settings": [
+    { "type": "checkbox", "id": "autoplay", "label": "Trocar sozinho", "default": true },
+    { "type": "range", "id": "speed", "label": "Tempo em cada banner", "min": 3, "max": 12, "step": 1, "unit": "s", "default": 6 }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Banner",
+      "settings": [
+        { "type": "paragraph", "content": "Com imagem: o banner mostra só a imagem (o texto já deve estar na arte). Sem imagem: mostra o texto abaixo sobre a cor de fundo." },
+        { "type": "image_picker", "id": "image", "label": "Imagem desktop", "info": "1920 x 680 px" },
+        { "type": "image_picker", "id": "image_mobile", "label": "Imagem celular", "info": "800 x 1000 px" },
+        { "type": "text", "id": "alt", "label": "Descrição da imagem (acessibilidade)" },
+        { "type": "url", "id": "link", "label": "Link" },
+        { "type": "header", "content": "Banner de texto (sem imagem)" },
+        { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "Direto da lavoura" },
+        { "type": "inline_richtext", "id": "heading", "label": "Título", "default": "Amendoim <em>de verdade</em> do campo pra sua mesa", "info": "Use itálico para destacar uma palavra." },
+        { "type": "text", "id": "text", "label": "Texto", "default": "Torra artesanal, sem conservantes. Colhido e embalado pela família Zanchetta." },
+        { "type": "text", "id": "button_label", "label": "Texto do botão", "default": "Comprar agora" },
+        { "type": "image_picker", "id": "image_side", "label": "Foto do produto (PNG sem fundo)" },
+        { "type": "color", "id": "bg", "label": "Cor de fundo", "default": "#223CA3" },
+        { "type": "select", "id": "text_style", "label": "Cor do texto", "options": [{ "value": "light", "label": "Branco" }, { "value": "dark", "label": "Azul escuro" }], "default": "light" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    { "name": "Banner principal", "blocks": [{ "type": "slide" }] }
+  ]
+}
+{% endschema %}

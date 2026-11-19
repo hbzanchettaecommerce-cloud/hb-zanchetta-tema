@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "info": { "type": "collapsible", "settings": { "title": "Informações nutricionais" } },
+        "storage": { "type": "collapsible", "settings": { "title": "Como conservar", "content": "<p>Mantenha em local seco e fresco. Depois de aberto, feche bem a embalagem.</p>" } }
+      },
+      "block_order": ["info", "storage"],
+      "settings": {}
+    },
+    "related": {
+      "type": "product-recommendations",
+      "settings": {}
+    }
+  },
+  "order": ["main", "related"]
+}

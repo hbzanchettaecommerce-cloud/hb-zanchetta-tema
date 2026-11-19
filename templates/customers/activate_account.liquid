@@ -1,0 +1,19 @@
+<div class="wrap">
+  <div class="auth">
+    <h1 class="disp">Ativar conta</h1>
+    <p style="text-align: center; color: var(--muted);">Crie uma senha para ativar sua conta.</p>
+    {%- form 'activate_customer_password' -%}
+      {%- if form.errors -%}<div class="form-error">{{ form.errors | default_errors }}</div>{%- endif -%}
+      <div class="field">
+        <label for="ac-pass">Senha</label>
+        <input class="input" type="password" id="ac-pass" name="customer[password]" autocomplete="new-password" required>
+      </div>
+      <div class="field">
+        <label for="ac-pass2">Confirme a senha</label>
+        <input class="input" type="password" id="ac-pass2" name="customer[password_confirmation]" autocomplete="new-password" required>
+      </div>
+      <button class="btn btn-y btn-block btn-lg" type="submit" value="Ativar">Ativar conta</button>
+      <button class="btn btn-o btn-block" type="submit" name="decline" value="Recusar">Recusar convite</button>
+    {%- endform -%}
+  </div>
+</div>

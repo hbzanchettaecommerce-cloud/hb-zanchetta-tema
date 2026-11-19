@@ -1,0 +1,30 @@
+<div data-recs data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.limit }}">
+  {%- if recommendations.performed and recommendations.products_count > 0 -%}
+    <section class="shelf">
+      <div class="wrap">
+        <div class="shelf-head">
+          <h2 class="disp">{{ section.settings.title }}</h2>
+          <div class="shelf-tools">
+            <button class="arr" type="button" data-rail-btn="-1" aria-label="Produtos anteriores">{% render 'icon', name: 'chevron-left', size: 16 %}</button>
+            <button class="arr" type="button" data-rail-btn="1" aria-label="Próximos produtos">{% render 'icon', name: 'chevron-right', size: 16 %}</button>
+          </div>
+        </div>
+        <div class="rail" data-rail>
+          {%- for product in recommendations.products -%}
+            {% render 'product-card', product: product %}
+          {%- endfor -%}
+        </div>
+      </div>
+    </section>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Produtos relacionados",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "Você também vai gostar" },
+    { "type": "range", "id": "limit", "label": "Quantidade", "min": 4, "max": 10, "step": 1, "default": 8 }
+  ]
+}
+{% endschema %}

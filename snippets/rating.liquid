@@ -1,0 +1,12 @@
+{%- comment -%}
+  Estrelas de avaliação. Lê os metacampos padrão de avaliações da Shopify
+  (preenchidos por apps como Judge.me, Shopify Product Reviews etc.).
+{%- endcomment -%}
+{%- if product.metafields.reviews.rating.value != blank -%}
+  {%- assign rating_value = product.metafields.reviews.rating.value.rating -%}
+  {%- assign stars_full = rating_value | round -%}
+  <div class="stars" aria-label="Nota {{ rating_value | round: 1 }} de 5">
+    {%- for i in (1..5) -%}{%- if i <= stars_full -%}★{%- else -%}☆{%- endif -%}{%- endfor -%}
+    <span>({{ product.metafields.reviews.rating_count | default: 0 }})</span>
+  </div>
+{%- endif -%}

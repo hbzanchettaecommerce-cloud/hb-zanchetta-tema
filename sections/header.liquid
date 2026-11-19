@@ -1,0 +1,77 @@
+<header class="header" style="--logo-h: {{ section.settings.logo_height }}px;">
+  <div class="wrap header-in">
+    <a class="logo" href="{{ routes.root_url }}" aria-label="{{ shop.name }}, página inicial">
+      {%- if settings.logo != blank -%}
+        {{ settings.logo | image_url: width: 500 | image_tag: alt: shop.name, loading: 'eager' }}
+      {%- else -%}
+        <img src="{{ 'logo-hb.png' | asset_url }}" alt="{{ shop.name }}" width="923" height="530">
+      {%- endif -%}
+    </a>
+
+    <form class="search" action="{{ routes.search_url }}" method="get" role="search">
+      <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ section.settings.search_placeholder | escape }}" aria-label="Buscar produtos">
+      <input type="hidden" name="options[prefix]" value="last">
+      <button type="submit" aria-label="Buscar">{% render 'icon', name: 'search', size: 20 %}</button>
+    </form>
+
+    <div class="h-actions">
+      {%- if shop.customer_accounts_enabled -%}
+        <a class="h-act" href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}">
+          {% render 'icon', name: 'user', size: 26 %}
+          <span class="lbl">
+            {%- if customer -%}Olá, {{ customer.first_name | default: 'cliente' }}<small>Minha conta</small>
+            {%- else -%}Entrar<small>ou cadastrar</small>{%- endif -%}
+          </span>
+        </a>
+      {%- endif -%}
+      {%- if section.settings.support_link != blank -%}
+        <a class="h-act" href="{{ section.settings.support_link }}">
+          {% render 'icon', name: 'support', size: 26 %}
+          <span class="lbl">Atendimento<small>{{ section.settings.support_hours }}</small></span>
+        </a>
+      {%- endif -%}
+      <a class="h-act" href="{{ routes.cart_url }}" aria-label="Carrinho">
+        <span class="cart-ico">{% render 'icon', name: 'cart', size: 28 %}<span class="cart-count" data-cart-count>{{ cart.item_count }}</span></span>
+        <span class="lbl">Carrinho<small data-cart-total>{{ cart.total_price | money }}</small></span>
+      </a>
+    </div>
+  </div>
+</header>
+
+{%- if section.settings.menu != blank -%}
+  <nav class="nav" aria-label="Menu principal">
+    <div class="wrap">
+      <ul class="nav-list">
+        {%- for link in section.settings.menu.links -%}
+          {%- assign title_lower = link.title | downcase -%}
+          <li class="{% if link.links != blank %}has-sub{% endif %}">
+            <a href="{{ link.url }}" class="{% if link.active or link.child_active %}active{% endif %}{% if title_lower contains 'oferta' or title_lower contains 'promo' %} hot{% endif %}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title }}</a>
+            {%- if link.links != blank -%}
+              <ul class="sub">
+                {%- for child in link.links -%}
+                  <li><a href="{{ child.url }}">{{ child.title }}</a></li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  </nav>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Cabeçalho",
+  "class": "section-header",
+  "settings": [
+    { "type": "range", "id": "logo_height", "label": "Altura do logo", "min": 36, "max": 90, "step": 2, "unit": "px", "default": 62 },
+    { "type": "text", "id": "search_placeholder", "label": "Texto da busca", "default": "O que você procura? Ex.: amendoim japonês" },
+    { "type": "link_list", "id": "menu", "label": "Menu de categorias", "default": "main-menu", "info": "Edite os itens em Loja virtual > Navegação." },
+    { "type": "header", "content": "Atendimento" },
+    { "type": "url", "id": "support_link", "label": "Link do atendimento", "info": "Pode ser a página de contato ou um link do WhatsApp. Vazio esconde o ícone." },
+    { "type": "text", "id": "support_hours", "label": "Horário", "default": "Seg. a sex." }
+  ],
+  "enabled_on": { "groups": ["header"] }
+}
+{% endschema %}

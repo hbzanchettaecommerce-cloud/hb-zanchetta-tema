@@ -1,0 +1,54 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "HB Zanchetta",
+    "theme_version": "1.0.0",
+    "theme_author": "Expressar",
+    "theme_documentation_url": "https://help.shopify.com/pt-BR/manual/online-store/themes",
+    "theme_support_url": "https://help.shopify.com/pt-BR"
+  },
+  {
+    "name": "Cores",
+    "settings": [
+      { "type": "color", "id": "color_primary", "label": "Azul (principal)", "default": "#223CA3" },
+      { "type": "color", "id": "color_primary_dark", "label": "Azul escuro (rodapé e detalhes)", "default": "#172A7C" },
+      { "type": "color", "id": "color_accent", "label": "Amarelo (botões e destaques)", "default": "#F4CA00" },
+      { "type": "color", "id": "color_cream", "label": "Creme (fundos suaves)", "default": "#FDFAF3" },
+      { "type": "color", "id": "color_text", "label": "Texto", "default": "#131D52" },
+      { "type": "color", "id": "color_sale", "label": "Promoção e desconto", "default": "#D7263D" },
+      { "type": "color", "id": "color_pix", "label": "Preço no Pix", "default": "#0B8457" }
+    ]
+  },
+  {
+    "name": "Logo e ícone",
+    "settings": [
+      { "type": "image_picker", "id": "logo", "label": "Logo (versão para fundo azul)", "info": "Se ficar vazio, usa o logo que veio com o tema." },
+      { "type": "image_picker", "id": "favicon", "label": "Ícone da aba do navegador", "info": "Quadrado, 64 x 64 px." }
+    ]
+  },
+  {
+    "name": "Preços e pagamento",
+    "settings": [
+      { "type": "range", "id": "pix_discount", "label": "Desconto no Pix", "min": 0, "max": 20, "step": 1, "unit": "%", "default": 5, "info": "Só exibe o valor nos produtos. O desconto de verdade precisa ser configurado no gateway de pagamento ou em Descontos." },
+      { "type": "range", "id": "installments_max", "label": "Máximo de parcelas sem juros", "min": 1, "max": 12, "step": 1, "default": 3 },
+      { "type": "range", "id": "installment_min", "label": "Valor mínimo de cada parcela", "min": 5, "max": 100, "step": 5, "unit": "R$", "default": 10 },
+      { "type": "range", "id": "free_shipping_threshold", "label": "Frete grátis a partir de", "min": 0, "max": 500, "step": 10, "unit": "R$", "default": 200, "info": "Mostra a barra de frete grátis no carrinho. Use 0 para ocultar. A regra de frete em si é configurada em Configurações > Frete." }
+    ]
+  },
+  {
+    "name": "WhatsApp",
+    "settings": [
+      { "type": "text", "id": "whatsapp_number", "label": "Número com DDD", "info": "Só números, ex.: 11999998888. Vazio esconde o botão flutuante." },
+      { "type": "text", "id": "whatsapp_message", "label": "Mensagem inicial", "default": "Olá! Vim pelo site da HB Zanchetta." }
+    ]
+  },
+  {
+    "name": "Redes sociais",
+    "settings": [
+      { "type": "url", "id": "social_instagram", "label": "Instagram" },
+      { "type": "url", "id": "social_facebook", "label": "Facebook" },
+      { "type": "url", "id": "social_tiktok", "label": "TikTok" },
+      { "type": "url", "id": "social_youtube", "label": "YouTube" }
+    ]
+  }
+]

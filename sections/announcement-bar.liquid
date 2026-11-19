@@ -1,0 +1,37 @@
+{%- if section.blocks.size > 0 -%}
+  <div class="ticker" style="--speed: {{ section.settings.speed }}s;" role="region" aria-label="Avisos da loja">
+    <div class="ticker-track">
+      {%- for i in (1..4) -%}
+        {%- for block in section.blocks -%}
+          <span {% if forloop.parentloop.first %}{{ block.shopify_attributes }}{% else %}aria-hidden="true"{% endif %}>
+            ★
+            {% if block.settings.link != blank %}<a href="{{ block.settings.link }}">{{ block.settings.text }}</a>{% else %}{{ block.settings.text }}{% endif %}
+          </span>
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Faixa de avisos",
+  "class": "section-announcement",
+  "settings": [
+    { "type": "range", "id": "speed", "label": "Tempo de cada volta", "min": 10, "max": 90, "step": 5, "unit": "s", "default": 40 }
+  ],
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Aviso",
+      "settings": [
+        { "type": "inline_richtext", "id": "text", "label": "Texto", "default": "<strong>10% off</strong> na primeira compra", "info": "Use negrito para destacar em amarelo." },
+        { "type": "url", "id": "link", "label": "Link (opcional)" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [{ "name": "Faixa de avisos" }],
+  "enabled_on": { "groups": ["header"] }
+}
+{% endschema %}

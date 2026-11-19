@@ -1,0 +1,54 @@
+{%- comment -%}
+  Card de produto usado em vitrines, coleções e busca.
+  Selos automáticos:
+  - "% OFF" quando o produto tem "Preço comparativo" maior que o preço
+  - "NOVO" quando o produto tem a tag: novo
+  - "FRETE GRÁTIS" quando o produto tem a tag: frete-gratis
+{%- endcomment -%}
+{%- liquid
+  assign p = product
+  assign v = p.selected_or_first_available_variant
+  assign tags_lower = p.tags | join: ',' | downcase
+  assign img_alt = p.featured_media.alt | default: p.title | escape
+-%}
+<article class="card">
+  <div class="card-img">
+    <a href="{{ p.url }}" tabindex="-1" aria-hidden="true">
+      {%- if p.featured_media -%}
+        {{ p.featured_media | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300,450,600', sizes: '(min-width: 1024px) 300px, 50vw', alt: img_alt }}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
+      {%- endif -%}
+    </a>
+    <div class="badges">
+      {%- if p.compare_at_price > p.price -%}
+        {%- assign off = p.compare_at_price | minus: p.price | times: 100 | divided_by: p.compare_at_price -%}
+        <span class="badge">{{ off }}% OFF</span>
+      {%- endif -%}
+      {%- if tags_lower contains 'novo' -%}<span class="badge new">NOVO</span>{%- endif -%}
+      {%- if tags_lower contains 'frete-gratis' -%}<span class="badge ship">FRETE GRÁTIS</span>{%- endif -%}
+      {%- unless p.available -%}<span class="badge off">ESGOTADO</span>{%- endunless -%}
+    </div>
+  </div>
+  <div class="card-body">
+    <a class="card-name" href="{{ p.url }}">{{ p.title }}</a>
+    {% render 'rating', product: p %}
+    {% render 'price-br', price: p.price, compare: p.compare_at_price %}
+
+    {%- if p.available and p.has_only_default_variant -%}
+      {%- form 'product', p, class: 'buy js-ajax-cart' -%}
+        <input type="hidden" name="id" value="{{ v.id }}">
+        <div class="qty">
+          <button type="button" data-qty-btn="-1" aria-label="Diminuir quantidade">−</button>
+          <input type="number" name="quantity" value="1" min="1" aria-label="Quantidade">
+          <button type="button" data-qty-btn="1" aria-label="Aumentar quantidade">+</button>
+        </div>
+        <button class="add" type="submit" name="add">Comprar</button>
+      {%- endform -%}
+    {%- elsif p.available -%}
+      <div class="buy"><a class="add" href="{{ p.url }}">Ver opções</a></div>
+    {%- else -%}
+      <div class="buy"><button class="add" type="button" disabled>Esgotado</button></div>
+    {%- endif -%}
+  </div>
+</article>

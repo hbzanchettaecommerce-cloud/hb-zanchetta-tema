@@ -1,0 +1,58 @@
+{%- if section.blocks.size > 0 -%}
+<section class="promos">
+  <div class="wrap">
+    <div class="promo-row" style="--cols: {{ section.blocks.size }};">
+      {%- for block in section.blocks -%}
+        {%- assign img_alt = block.settings.heading | strip_html | escape -%}
+        <a class="promo" href="{{ block.settings.link | default: '#' }}" style="--promo-bg: {{ block.settings.bg }};" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <div class="promo-img">
+              {{ block.settings.image | image_url: width: 900 | image_tag: widths: '400,600,900', sizes: '(min-width: 820px) 33vw, 82vw', alt: img_alt, loading: 'lazy' }}
+            </div>
+          {%- else -%}
+            <div class="promo-text">
+              {%- if block.settings.tag != blank -%}<span class="tag">{{ block.settings.tag }}</span>{%- endif -%}
+              <h3 class="disp">{{ block.settings.heading }}</h3>
+              {%- if block.settings.text != blank -%}<p>{{ block.settings.text }}</p>{%- endif -%}
+              {%- if block.settings.button_label != blank -%}<span class="btn btn-y">{{ block.settings.button_label }}</span>{%- endif -%}
+            </div>
+          {%- endif -%}
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Banners secundários",
+  "blocks": [
+    {
+      "type": "promo",
+      "name": "Banner",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Imagem", "info": "800 x 600 px. Com imagem, o texto abaixo não aparece." },
+        { "type": "url", "id": "link", "label": "Link" },
+        { "type": "header", "content": "Banner de texto (sem imagem)" },
+        { "type": "text", "id": "tag", "label": "Etiqueta", "default": "Mais pedido" },
+        { "type": "inline_richtext", "id": "heading", "label": "Título", "default": "Amendoim <em>japonês</em>" },
+        { "type": "text", "id": "text", "label": "Texto", "default": "Crocante, temperado e na medida." },
+        { "type": "text", "id": "button_label", "label": "Botão", "default": "Comprar" },
+        { "type": "color", "id": "bg", "label": "Cor de fundo", "default": "#223CA3" }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Banners secundários",
+      "blocks": [
+        { "type": "promo", "settings": { "tag": "Mais pedido", "heading": "Amendoim <em>japonês</em>", "text": "Crocante, temperado e na medida.", "bg": "#223CA3" } },
+        { "type": "promo", "settings": { "tag": "Até 30% off", "heading": "Pastas de <em>amendoim</em>", "text": "Integral, cacau e mel.", "bg": "#9A6526" } },
+        { "type": "promo", "settings": { "tag": "Para festas", "heading": "Kits & <em>paçocas</em>", "text": "Displays e kits para presentear.", "bg": "#131D52" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

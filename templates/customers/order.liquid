@@ -1,0 +1,39 @@
+<div class="wrap account">
+  <h1 class="disp">Pedido {{ order.name }}</h1>
+  <div>
+    <p style="color: var(--muted);">Feito em {{ order.created_at | date: '%d/%m/%Y às %H:%M' }}{% if order.cancelled %} · Cancelado em {{ order.cancelled_at | date: '%d/%m/%Y' }}{% endif %}</p>
+    <div class="table-wrap">
+      <table class="table">
+        <thead><tr><th>Produto</th><th>Preço</th><th>Qtd.</th><th>Total</th></tr></thead>
+        <tbody>
+          {%- for item in order.line_items -%}
+            <tr>
+              <td>{{ item.title }}{% if item.fulfillment %}<br><small style="color: var(--muted);">Enviado em {{ item.fulfillment.created_at | date: '%d/%m/%Y' }}{% if item.fulfillment.tracking_url %} · <a href="{{ item.fulfillment.tracking_url }}" target="_blank" rel="noopener" style="color: var(--blue);">Rastrear</a>{% endif %}</small>{% endif %}</td>
+              <td>{{ item.final_price | money }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ item.final_line_price | money }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+        <tfoot>
+          <tr><td colspan="3">Subtotal</td><td>{{ order.line_items_subtotal_price | money }}</td></tr>
+          {%- for d in order.cart_level_discount_applications -%}
+            <tr><td colspan="3">Desconto ({{ d.title }})</td><td>−{{ d.total_allocated_amount | money }}</td></tr>
+          {%- endfor -%}
+          {%- for shipping_method in order.shipping_methods -%}
+            <tr><td colspan="3">Frete ({{ shipping_method.title }})</td><td>{{ shipping_method.price | money }}</td></tr>
+          {%- endfor -%}
+          <tr><td colspan="3"><strong>Total</strong></td><td><strong>{{ order.total_net_amount | money }}</strong></td></tr>
+        </tfoot>
+      </table>
+    </div>
+    <p><a class="btn btn-o" href="{{ routes.account_url }}">← Voltar para minha conta</a></p>
+  </div>
+  <aside class="box">
+    <h2>Entrega</h2>
+    {%- if order.shipping_address -%}{{ order.shipping_address | format_address }}{%- else -%}<p>Sem endereço de entrega.</p>{%- endif -%}
+    <p><strong>Status:</strong> {{ order.fulfillment_status_label }}</p>
+    <h2 style="margin-top: 10px;">Pagamento</h2>
+    <p><strong>Status:</strong> {{ order.financial_status_label }}</p>
+  </aside>
+</div>

@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-cart",
+      "settings": {}
+    },
+    "suggestions": {
+      "type": "featured-collection",
+      "settings": { "title": "Aproveite e leve também", "limit": 8 }
+    }
+  },
+  "order": ["main", "suggestions"]
+}

@@ -1,0 +1,77 @@
+<footer class="foot">
+  <div class="wrap foot-grid">
+    <div>
+      <a class="logo" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+        {%- if settings.logo != blank -%}
+          {{ settings.logo | image_url: width: 400 | image_tag: alt: shop.name, loading: 'lazy' }}
+        {%- else -%}
+          <img src="{{ 'logo-hb.png' | asset_url }}" alt="{{ shop.name }}" width="923" height="530" loading="lazy">
+        {%- endif -%}
+      </a>
+      {%- if section.settings.about != blank -%}<div class="rte">{{ section.settings.about }}</div>{%- endif -%}
+      <div class="social">
+        {%- if settings.social_instagram != blank -%}<a href="{{ settings.social_instagram }}" target="_blank" rel="noopener" aria-label="Instagram">{% render 'icon', name: 'instagram', size: 18 %}</a>{%- endif -%}
+        {%- if settings.social_facebook != blank -%}<a href="{{ settings.social_facebook }}" target="_blank" rel="noopener" aria-label="Facebook">{% render 'icon', name: 'facebook', size: 18 %}</a>{%- endif -%}
+        {%- if settings.social_tiktok != blank -%}<a href="{{ settings.social_tiktok }}" target="_blank" rel="noopener" aria-label="TikTok">{% render 'icon', name: 'tiktok', size: 18 %}</a>{%- endif -%}
+        {%- if settings.social_youtube != blank -%}<a href="{{ settings.social_youtube }}" target="_blank" rel="noopener" aria-label="YouTube">{% render 'icon', name: 'youtube', size: 18 %}</a>{%- endif -%}
+      </div>
+    </div>
+
+    {%- for i in (1..2) -%}
+      {%- liquid
+        if i == 1
+          assign menu = section.settings.menu_1
+          assign menu_title = section.settings.menu_1_title
+        else
+          assign menu = section.settings.menu_2
+          assign menu_title = section.settings.menu_2_title
+        endif
+      -%}
+      <div>
+        <h4>{{ menu_title }}</h4>
+        {%- if menu != blank -%}
+          <ul>{%- for link in menu.links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}</ul>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+
+    <div>
+      <h4>Atendimento</h4>
+      <div class="rte">{{ section.settings.contact }}</div>
+      {%- if section.settings.show_seal -%}
+        <h4 style="margin-top: 22px;">Segurança</h4>
+        <span class="seal">{% render 'icon', name: 'lock', size: 14 %}Site protegido SSL</span>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="foot-bottom">
+    <div class="wrap foot-bottom-in">
+      <div class="pay" aria-label="Formas de pagamento">
+        <span class="pix-tag">PIX</span>
+        {%- for type in shop.enabled_payment_types -%}
+          {{ type | payment_type_svg_tag }}
+        {%- endfor -%}
+      </div>
+      <span style="font-size: 12px;">© {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
+    </div>
+    {%- if section.settings.legal != blank -%}<p class="legal wrap">{{ section.settings.legal }}</p>{%- endif -%}
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Rodapé",
+  "settings": [
+    { "type": "richtext", "id": "about", "label": "Texto sobre a marca", "default": "<p>Amendoins selecionados, torrados com cuidado desde a lavoura até a embalagem.</p>" },
+    { "type": "text", "id": "menu_1_title", "label": "Título da coluna 1", "default": "Categorias" },
+    { "type": "link_list", "id": "menu_1", "label": "Menu da coluna 1", "default": "main-menu" },
+    { "type": "text", "id": "menu_2_title", "label": "Título da coluna 2", "default": "Institucional" },
+    { "type": "link_list", "id": "menu_2", "label": "Menu da coluna 2", "default": "footer" },
+    { "type": "richtext", "id": "contact", "label": "Contato", "default": "<p>WhatsApp: (00) 00000-0000</p><p>sac@hbzanchetta.com.br</p><p>Seg. a sex., 8h às 18h</p>" },
+    { "type": "checkbox", "id": "show_seal", "label": "Mostrar selo de site seguro", "default": true },
+    { "type": "text", "id": "legal", "label": "Razão social, CNPJ e endereço", "default": "HB Zanchetta · CNPJ 00.000.000/0001-00 · Endereço da empresa" }
+  ],
+  "enabled_on": { "groups": ["footer"] }
+}
+{% endschema %}

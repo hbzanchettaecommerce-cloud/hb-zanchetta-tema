@@ -1,0 +1,9 @@
+{%- comment -%} Card de exemplo exibido enquanto a vitrine não tem coleção escolhida. {%- endcomment -%}
+<article class="card">
+  <div class="card-img">{{ 'product-' | append: index | placeholder_svg_tag: 'placeholder' }}</div>
+  <div class="card-body">
+    <span class="card-name">Nome do produto</span>
+    {% render 'price-br', price: 2990, compare: 3590 %}
+    <div class="buy"><button class="add" type="button" disabled>Comprar</button></div>
+  </div>
+</article>

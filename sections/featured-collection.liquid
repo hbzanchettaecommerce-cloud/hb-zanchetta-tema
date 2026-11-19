@@ -1,0 +1,44 @@
+{%- liquid
+  assign col = section.settings.collection
+  assign has_products = false
+  if col != blank and col.products_count > 0
+    assign has_products = true
+  endif
+-%}
+{%- if has_products or request.design_mode -%}
+<section class="shelf">
+  <div class="wrap">
+    <div class="shelf-head">
+      <h2 class="disp">{{ section.settings.title }}</h2>
+      <div class="shelf-tools">
+        {%- if col != blank -%}<a class="see-all" href="{{ col.url }}">Ver todos →</a>{%- endif -%}
+        <button class="arr" type="button" data-rail-btn="-1" aria-label="Produtos anteriores">{% render 'icon', name: 'chevron-left', size: 16 %}</button>
+        <button class="arr" type="button" data-rail-btn="1" aria-label="Próximos produtos">{% render 'icon', name: 'chevron-right', size: 16 %}</button>
+      </div>
+    </div>
+    <div class="rail" data-rail>
+      {%- if has_products -%}
+        {%- for product in col.products limit: section.settings.limit -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..4) -%}
+          {% render 'product-card-placeholder', index: i %}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Vitrine de produtos",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "Mais vendidos" },
+    { "type": "collection", "id": "collection", "label": "Coleção", "info": "Enquanto nenhuma coleção for escolhida, a vitrine só aparece aqui no editor." },
+    { "type": "range", "id": "limit", "label": "Quantidade de produtos", "min": 4, "max": 20, "step": 1, "default": 10 }
+  ],
+  "presets": [{ "name": "Vitrine de produtos" }]
+}
+{% endschema %}

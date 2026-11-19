@@ -1,0 +1,49 @@
+{%- if section.blocks.size > 0 -%}
+<section class="reviews">
+  <div class="wrap">
+    <div class="shelf-head"><h2 class="disp">{{ section.settings.title }}</h2></div>
+    <div class="rev-row">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign words = block.settings.name | split: ' '
+          assign first = words.first | slice: 0
+          assign second = words[1] | slice: 0
+        -%}
+        <article class="rev" {{ block.shopify_attributes }}>
+          <div class="stars" aria-label="Nota {{ block.settings.rating }} de 5">{% for i in (1..5) %}{% if i <= block.settings.rating %}★{% else %}☆{% endif %}{% endfor %}</div>
+          <p>{{ block.settings.text }}</p>
+          <footer>
+            <div class="avatar" aria-hidden="true">{{ first | upcase }}{{ second | upcase }}</div>
+            <div>{{ block.settings.name }}{% if block.settings.city != blank %} · {{ block.settings.city }}{% endif %}<small class="verified">✓ Compra verificada</small></div>
+          </footer>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Depoimentos",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "Quem provou, aprovou" }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Depoimento",
+      "settings": [
+        { "type": "textarea", "id": "text", "label": "Depoimento", "default": "O japonês é viciante, chegou super bem embalado e fresquinho." },
+        { "type": "text", "id": "name", "label": "Nome", "default": "Mariana C." },
+        { "type": "text", "id": "city", "label": "Cidade", "default": "Ribeirão Preto/SP" },
+        { "type": "range", "id": "rating", "label": "Estrelas", "min": 1, "max": 5, "step": 1, "default": 5 }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    { "name": "Depoimentos", "blocks": [{ "type": "review" }, { "type": "review" }, { "type": "review" }] }
+  ]
+}
+{% endschema %}

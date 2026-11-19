@@ -1,0 +1,38 @@
+<div class="wrap" style="padding-bottom: 48px;">
+  <nav class="crumbs"><a href="{{ routes.account_url }}">Minha conta</a> / <span>Endereços</span></nav>
+  <h1 class="disp" style="font-size: 42px; margin: 0 0 20px;">Meus endereços</h1>
+
+  {%- paginate customer.addresses by 12 -%}
+    <div class="addr-grid">
+      {%- for address in customer.addresses -%}
+        <div class="box">
+          {%- if address == customer.default_address -%}<strong style="color: var(--pix);">Endereço principal</strong>{%- endif -%}
+          {{ address | format_address }}
+          {%- form 'customer_address', address -%}
+            <button class="btn btn-o" type="submit" name="_method" value="delete" style="padding: 8px 14px; font-size: 12px;">Excluir</button>
+          {%- endform -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endpaginate -%}
+
+  <div class="box" style="margin-top: 28px; max-width: 720px;">
+    <h2>Adicionar endereço</h2>
+    {%- form 'customer_address', customer.new_address -%}
+      {%- if form.errors -%}<div class="form-error">{{ form.errors | default_errors }}</div>{%- endif -%}
+      <div class="form-grid">
+        <div class="field"><label for="a-first">Nome</label><input class="input" id="a-first" name="address[first_name]" value="{{ form.first_name }}" autocomplete="given-name"></div>
+        <div class="field"><label for="a-last">Sobrenome</label><input class="input" id="a-last" name="address[last_name]" value="{{ form.last_name }}" autocomplete="family-name"></div>
+        <div class="field"><label for="a-zip">CEP</label><input class="input" id="a-zip" name="address[zip]" value="{{ form.zip }}" autocomplete="postal-code" inputmode="numeric"></div>
+        <div class="field"><label for="a-phone">Telefone</label><input class="input" id="a-phone" name="address[phone]" value="{{ form.phone }}" autocomplete="tel"></div>
+        <div class="field full"><label for="a-addr1">Endereço e número</label><input class="input" id="a-addr1" name="address[address1]" value="{{ form.address1 }}" autocomplete="address-line1"></div>
+        <div class="field full"><label for="a-addr2">Complemento e bairro</label><input class="input" id="a-addr2" name="address[address2]" value="{{ form.address2 }}" autocomplete="address-line2"></div>
+        <div class="field"><label for="a-city">Cidade</label><input class="input" id="a-city" name="address[city]" value="{{ form.city }}" autocomplete="address-level2"></div>
+        <div class="field"><label for="a-province">Estado (sigla)</label><input class="input" id="a-province" name="address[province]" value="{{ form.province }}" placeholder="SP" autocomplete="address-level1"></div>
+        <input type="hidden" name="address[country]" value="Brazil">
+        <label class="chk full"><input type="checkbox" name="address[default]" value="1"> Usar como endereço principal</label>
+      </div>
+      <p><button class="btn btn-y" type="submit">Salvar endereço</button></p>
+    {%- endform -%}
+  </div>
+</div>

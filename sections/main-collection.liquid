@@ -1,0 +1,124 @@
+{%- paginate collection.products by section.settings.per_page -%}
+<div class="wrap">
+  <nav class="crumbs" aria-label="Você está em">
+    <a href="{{ routes.root_url }}">Início</a> / <span>{{ collection.title }}</span>
+  </nav>
+  <header class="coll-head">
+    <h1 class="disp">{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}<div class="rte">{{ collection.description }}</div>{%- endif -%}
+  </header>
+
+  <div class="coll-layout">
+    {%- if section.settings.show_filters and collection.filters.size > 0 -%}
+      <aside class="filters" aria-label="Filtros">
+        <div class="filters-head">
+          <strong>Filtrar</strong>
+          <a href="{{ collection.url }}?sort_by={{ collection.sort_by }}">Limpar</a>
+        </div>
+        <form action="{{ collection.url }}" method="get" data-filter-form>
+          {%- if collection.sort_by -%}<input type="hidden" name="sort_by" value="{{ collection.sort_by }}">{%- endif -%}
+          {%- for filter in collection.filters -%}
+            <details class="f" open>
+              <summary>{{ filter.label }}</summary>
+              {%- case filter.type -%}
+                {%- when 'price_range' -%}
+                  <div class="price-range">
+                    <input class="input" type="number" min="0" name="{{ filter.min_value.param_name }}" value="{% if filter.min_value.value %}{{ filter.min_value.value | divided_by: 100 }}{% endif %}" placeholder="De R$ 0" aria-label="Preço mínimo">
+                    <span>–</span>
+                    <input class="input" type="number" min="0" name="{{ filter.max_value.param_name }}" value="{% if filter.max_value.value %}{{ filter.max_value.value | divided_by: 100 }}{% endif %}" placeholder="Até R$ {{ filter.range_max | divided_by: 100 }}" aria-label="Preço máximo">
+                  </div>
+                {%- else -%}
+                  <div class="f-list">
+                    {%- for value in filter.values -%}
+                      <label class="chk">
+                        <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}"{% if value.active %} checked{% endif %}{% if value.count == 0 and value.active == false %} disabled{% endif %}>
+                        {{ value.label }} <small>({{ value.count }})</small>
+                      </label>
+                    {%- endfor -%}
+                  </div>
+              {%- endcase -%}
+            </details>
+          {%- endfor -%}
+        </form>
+      </aside>
+    {%- endif -%}
+
+    <div>
+      <div class="toolbar">
+        <div style="display:flex;gap:12px;align-items:center;">
+          {%- if section.settings.show_filters and collection.filters.size > 0 -%}
+            <button class="btn btn-o filters-btn" type="button" data-filters-toggle>{% render 'icon', name: 'filter', size: 16 %}Filtrar</button>
+          {%- endif -%}
+          <span class="count">{{ collection.products_count }} {% if collection.products_count == 1 %}produto{% else %}produtos{% endif %}</span>
+        </div>
+        <label>
+          <span class="visually-hidden">Ordenar por</span>
+          <select class="select" data-sort>
+            {%- assign current_sort = collection.sort_by | default: collection.default_sort_by -%}
+            {%- for option in collection.sort_options -%}
+              <option value="{{ option.value }}"{% if option.value == current_sort %} selected{% endif %}>{{ option.name }}</option>
+            {%- endfor -%}
+          </select>
+        </label>
+      </div>
+
+      {%- liquid
+        assign active_values = ''
+        for filter in collection.filters
+          for value in filter.active_values
+            assign active_values = active_values | append: 'x'
+          endfor
+          if filter.type == 'price_range'
+            if filter.min_value.value != nil or filter.max_value.value != nil
+              assign active_values = active_values | append: 'x'
+            endif
+          endif
+        endfor
+      -%}
+      {%- if active_values != '' -%}
+        <div class="chips">
+          {%- for filter in collection.filters -%}
+            {%- for value in filter.active_values -%}
+              <a class="chip" href="{{ value.url_to_remove }}">{{ value.label }} ✕</a>
+            {%- endfor -%}
+            {%- if filter.type == 'price_range' -%}
+              {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
+                <a class="chip" href="{{ filter.url_to_remove }}">Preço ✕</a>
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if collection.products.size > 0 -%}
+        <div class="grid" style="--cols: {{ section.settings.columns }};">
+          {%- for product in collection.products -%}
+            {% render 'product-card', product: product %}
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <div class="empty">
+          <h2>Nenhum produto encontrado</h2>
+          <p>Tente remover algum filtro ou veja todos os produtos.</p>
+          <a class="btn btn-b" href="{{ collection.url }}">Limpar filtros</a>
+        </div>
+      {%- endif -%}
+
+      {%- if paginate.pages > 1 -%}
+        <nav class="pagination" aria-label="Páginas">{{ paginate | default_pagination: next: '›', previous: '‹' }}</nav>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Coleção",
+  "settings": [
+    { "type": "range", "id": "per_page", "label": "Produtos por página", "min": 8, "max": 48, "step": 4, "default": 24 },
+    { "type": "range", "id": "columns", "label": "Colunas no computador", "min": 3, "max": 4, "step": 1, "default": 3 },
+    { "type": "checkbox", "id": "show_filters", "label": "Mostrar filtros", "default": true, "info": "Os filtros são criados no app Search & Discovery da Shopify." }
+  ]
+}
+{% endschema %}

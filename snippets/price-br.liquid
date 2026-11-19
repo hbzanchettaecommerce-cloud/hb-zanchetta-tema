@@ -1,0 +1,31 @@
+{%- comment -%}
+  Preço no padrão brasileiro: "de/por", parcelas sem juros e valor no Pix.
+  Uso: {% render 'price-br', price: variant.price, compare: variant.compare_at_price, big: true %}
+{%- endcomment -%}
+{%- liquid
+  assign pix = settings.pix_discount | default: 0
+  assign pix_pct = 100 | minus: pix
+  assign pix_price = price | times: pix_pct | divided_by: 100
+
+  assign inst_max = settings.installments_max | default: 1
+  assign min_cents = settings.installment_min | default: 10 | times: 100
+  if min_cents < 1
+    assign min_cents = 1
+  endif
+  assign n = price | divided_by: min_cents
+  if n > inst_max
+    assign n = inst_max
+  endif
+  if n < 1
+    assign n = 1
+  endif
+  assign parcel = price | divided_by: n
+-%}
+<div class="price-box{% if big %} price-lg{% endif %}" data-price-box>
+  <div class="old" data-compare>{% if compare > price %}{{ compare | money }}{% endif %}</div>
+  <div class="price" data-price>{{ price | money }}</div>
+  <div class="inst" data-inst{% if n < 2 %} hidden{% endif %}>ou {{ n }}x de {{ parcel | money }} sem juros</div>
+  {%- if pix > 0 -%}
+    <div class="pix" data-pix>{{ pix_price | money }} no Pix</div>
+  {%- endif -%}
+</div>

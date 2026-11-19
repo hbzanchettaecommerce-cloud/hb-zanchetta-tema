@@ -1,0 +1,49 @@
+<section class="wide">
+  <div class="wrap">
+    {%- if section.settings.image != blank -%}
+      {%- assign img_alt = section.settings.heading | strip_html | escape -%}
+      <a class="wide-box only-img" href="{{ section.settings.link | default: '#' }}">
+        <picture>
+          {%- if section.settings.image_mobile != blank -%}
+            <source media="(max-width: 749px)" srcset="{{ section.settings.image_mobile | image_url: width: 900 }}">
+          {%- endif -%}
+          {{ section.settings.image | image_url: width: 2400 | image_tag: widths: '750,1200,1800,2400', sizes: '(min-width: 1240px) 1240px, 100vw', alt: img_alt, loading: 'lazy' }}
+        </picture>
+      </a>
+    {%- else -%}
+      <div class="wide-box" style="--wide-bg: {{ section.settings.bg }};">
+        <div class="wide-copy">
+          <h2 class="disp">{{ section.settings.heading }}</h2>
+          {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
+          {%- if section.settings.button_label != blank -%}
+            <a class="btn btn-b" href="{{ section.settings.link | default: '#' }}">{{ section.settings.button_label }} →</a>
+          {%- endif -%}
+        </div>
+        <div class="wide-side">
+          {%- if section.settings.image_side != blank -%}
+            {{ section.settings.image_side | image_url: width: 900 | image_tag: loading: 'lazy', alt: '' }}
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Banner largo",
+  "settings": [
+    { "type": "paragraph", "content": "Com imagem: mostra só a arte. Sem imagem: mostra o texto sobre a cor de fundo." },
+    { "type": "image_picker", "id": "image", "label": "Imagem desktop", "info": "1920 x 500 px" },
+    { "type": "image_picker", "id": "image_mobile", "label": "Imagem celular", "info": "800 x 800 px" },
+    { "type": "url", "id": "link", "label": "Link" },
+    { "type": "header", "content": "Banner de texto" },
+    { "type": "inline_richtext", "id": "heading", "label": "Título", "default": "Compre no <em>atacado</em> e revenda HB Zanchetta" },
+    { "type": "text", "id": "text", "label": "Texto", "default": "Condições especiais para mercados, empórios e lojas de conveniência." },
+    { "type": "text", "id": "button_label", "label": "Botão", "default": "Quero ser revendedor" },
+    { "type": "image_picker", "id": "image_side", "label": "Foto ao lado" },
+    { "type": "color", "id": "bg", "label": "Cor de fundo", "default": "#F4CA00" }
+  ],
+  "presets": [{ "name": "Banner largo" }]
+}
+{% endschema %}

@@ -1,0 +1,14 @@
+<article class="wrap page-wrap">
+  <nav class="crumbs" aria-label="Você está em"><a href="{{ routes.root_url }}">Início</a> / <a href="{{ blog.url }}">{{ blog.title }}</a> / <span>{{ article.title }}</span></nav>
+  <h1 class="disp">{{ article.title }}</h1>
+  <p style="color: var(--muted); margin-top: -8px;">{{ article.published_at | date: '%d/%m/%Y' }}{% if article.author %} · {{ article.author }}{% endif %}</p>
+  {%- if article.image -%}
+    <p>{{ article.image | image_url: width: 1400 | image_tag: alt: '', style: 'border-radius: 14px;' }}</p>
+  {%- endif -%}
+  <div class="rte">{{ article.content }}</div>
+  <p style="margin-top: 32px;"><a class="btn btn-o" href="{{ blog.url }}">← Voltar para o blog</a></p>
+</article>
+
+{% schema %}
+{ "name": "Artigo", "settings": [] }
+{% endschema %}

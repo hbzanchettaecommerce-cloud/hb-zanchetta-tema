@@ -1,0 +1,49 @@
+{%- paginate search.results by 24 -%}
+<div class="wrap" style="padding-bottom: 40px;">
+  <header class="coll-head" style="padding-top: 24px;">
+    <h1 class="disp">{% if search.performed %}Resultados para “{{ search.terms | escape }}”{% else %}Buscar{% endif %}</h1>
+  </header>
+
+  <form class="search-big" action="{{ routes.search_url }}" method="get" role="search">
+    <input class="input" type="search" name="q" value="{{ search.terms | escape }}" placeholder="O que você procura?" aria-label="Buscar">
+    <input type="hidden" name="options[prefix]" value="last">
+    <button class="btn btn-b" type="submit">Buscar</button>
+  </form>
+
+  {%- if search.performed -%}
+    {%- if search.results_count == 0 -%}
+      <div class="empty">
+        <h2>Nada encontrado</h2>
+        <p>Confira a ortografia ou tente uma palavra mais simples, como “japonês” ou “pasta”.</p>
+        <a class="btn btn-y" href="{{ routes.all_products_collection_url }}">Ver todos os produtos</a>
+      </div>
+    {%- else -%}
+      <p class="count" style="color: var(--muted);">{{ search.results_count }} {% if search.results_count == 1 %}resultado{% else %}resultados{% endif %}</p>
+      <div class="grid" style="--cols: 4;">
+        {%- for item in search.results -%}
+          {%- if item.object_type == 'product' -%}
+            {% render 'product-card', product: item %}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      <div class="search-other">
+        {%- for item in search.results -%}
+          {%- unless item.object_type == 'product' -%}
+            <a href="{{ item.url }}"><strong>{{ item.title }}</strong><br><small>{{ item.content | strip_html | truncatewords: 25 }}</small></a>
+          {%- endunless -%}
+        {%- endfor -%}
+      </div>
+      {%- if paginate.pages > 1 -%}
+        <nav class="pagination" aria-label="Páginas">{{ paginate | default_pagination: next: '›', previous: '‹' }}</nav>
+      {%- endif -%}
+    {%- endif -%}
+  {%- endif -%}
+</div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Resultados da busca",
+  "settings": []
+}
+{% endschema %}

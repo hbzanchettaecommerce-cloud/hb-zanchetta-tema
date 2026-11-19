@@ -1,0 +1,31 @@
+<section class="news">
+  <div class="wrap news-in">
+    <div>
+      <h3 class="disp">{{ section.settings.heading }}</h3>
+      {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
+    </div>
+    {%- form 'customer', class: 'news-form', id: 'newsletter-form' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      {%- if form.posted_successfully? -%}
+        <p class="form-ok">{{ section.settings.success }}</p>
+      {%- else -%}
+        <input type="email" name="contact[email]" placeholder="Seu melhor e-mail" aria-label="E-mail" autocomplete="email" required>
+        <button class="btn btn-y" type="submit">{{ section.settings.button_label }}</button>
+        {%- if form.errors -%}<div class="form-error">{{ form.errors | default_errors }}</div>{%- endif -%}
+      {%- endif -%}
+    {%- endform -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    { "type": "inline_richtext", "id": "heading", "label": "Título", "default": "Ganhe <em>10% off</em> na primeira compra" },
+    { "type": "text", "id": "text", "label": "Texto", "default": "Cadastre seu e-mail e receba o cupom e as novidades da HB Zanchetta." },
+    { "type": "text", "id": "button_label", "label": "Botão", "default": "Quero o cupom" },
+    { "type": "text", "id": "success", "label": "Mensagem de sucesso", "default": "Pronto! Confira seu e-mail." }
+  ],
+  "presets": [{ "name": "Newsletter" }]
+}
+{% endschema %}

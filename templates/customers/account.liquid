@@ -1,0 +1,38 @@
+<div class="wrap account">
+  <h1 class="disp">Minha conta</h1>
+  <div>
+    <h2>Meus pedidos</h2>
+    {%- paginate customer.orders by 20 -%}
+      {%- if customer.orders.size > 0 -%}
+        <div class="table-wrap">
+          <table class="table">
+            <thead><tr><th>Pedido</th><th>Data</th><th>Pagamento</th><th>Entrega</th><th>Total</th></tr></thead>
+            <tbody>
+              {%- for order in customer.orders -%}
+                <tr>
+                  <td><a href="{{ order.customer_url }}" style="color: var(--blue); font-weight: 700;">{{ order.name }}</a></td>
+                  <td>{{ order.created_at | date: '%d/%m/%Y' }}</td>
+                  <td>{{ order.financial_status_label }}</td>
+                  <td>{{ order.fulfillment_status_label }}</td>
+                  <td>{{ order.total_net_amount | money }}</td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+        </div>
+      {%- else -%}
+        <p style="color: var(--muted);">Você ainda não fez nenhum pedido.</p>
+        <a class="btn btn-y" href="{{ routes.all_products_collection_url }}">Começar a comprar</a>
+      {%- endif -%}
+      {%- if paginate.pages > 1 -%}<nav class="pagination">{{ paginate | default_pagination: next: '›', previous: '‹' }}</nav>{%- endif -%}
+    {%- endpaginate -%}
+  </div>
+  <aside class="box">
+    <h2>Meus dados</h2>
+    <div>{{ customer.name }}</div>
+    <div>{{ customer.email }}</div>
+    {%- if customer.default_address -%}{{ customer.default_address | format_address }}{%- endif -%}
+    <a href="{{ routes.account_addresses_url }}" style="color: var(--blue); font-weight: 700;">Meus endereços ({{ customer.addresses_count }})</a>
+    <a class="btn btn-o" href="{{ routes.account_logout_url }}" style="margin-top: 10px;">Sair</a>
+  </aside>
+</div>

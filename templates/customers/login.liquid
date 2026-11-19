@@ -1,0 +1,38 @@
+<div class="wrap">
+  <div class="auth">
+    <div id="recover" class="recover">
+      <h1 class="disp">Recuperar senha</h1>
+      <p style="text-align: center; color: var(--muted);">Vamos enviar um link para você criar uma nova senha.</p>
+      {%- form 'recover_customer_password' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="form-ok">Enviamos o link para o seu e-mail.</p>
+        {%- endif -%}
+        {%- if form.errors -%}<div class="form-error">{{ form.errors | default_errors }}</div>{%- endif -%}
+        <div class="field">
+          <label for="recover-email">E-mail</label>
+          <input class="input" type="email" id="recover-email" name="email" autocomplete="email" required>
+        </div>
+        <button class="btn btn-b btn-block" type="submit">Enviar link</button>
+      {%- endform -%}
+      <p class="alt"><a href="#login">Voltar para o login</a></p>
+    </div>
+
+    <div class="login-box" id="login">
+      <h1 class="disp">Entrar</h1>
+      {%- form 'customer_login' -%}
+        {%- if form.errors -%}<div class="form-error">{{ form.errors | default_errors }}</div>{%- endif -%}
+        <div class="field">
+          <label for="login-email">E-mail</label>
+          <input class="input" type="email" id="login-email" name="customer[email]" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="login-password">Senha</label>
+          <input class="input" type="password" id="login-password" name="customer[password]" autocomplete="current-password" required>
+        </div>
+        <p style="margin: 0; font-size: 14px;"><a href="#recover" style="color: var(--blue);">Esqueci minha senha</a></p>
+        <button class="btn btn-y btn-block btn-lg" type="submit">Entrar</button>
+      {%- endform -%}
+      <p class="alt">Ainda não tem conta? <a href="{{ routes.account_register_url }}">Cadastre-se</a></p>
+    </div>
+  </div>
+</div>

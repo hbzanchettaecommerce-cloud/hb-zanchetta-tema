@@ -1,0 +1,9 @@
+<div class="wrap page-wrap">
+  <nav class="crumbs" aria-label="Você está em"><a href="{{ routes.root_url }}">Início</a> / <span>{{ page.title }}</span></nav>
+  <h1 class="disp">{{ page.title }}</h1>
+  <div class="rte">{{ page.content }}</div>
+</div>
+
+{% schema %}
+{ "name": "Página", "settings": [] }
+{% endschema %}

@@ -1,0 +1,24 @@
+<div class="wrap" style="padding-bottom: 48px;">
+  <nav class="crumbs" aria-label="Você está em"><a href="{{ routes.root_url }}">Início</a> / <span>Categorias</span></nav>
+  <header class="coll-head"><h1 class="disp">Categorias</h1></header>
+  <div class="cat-row" style="--cols: 6;">
+    {%- for c in collections -%}
+      {%- unless c.handle == 'frontpage' -%}
+        <a class="cat" href="{{ c.url }}">
+          <span class="cat-disc">
+            {%- if c.featured_image -%}
+              {{ c.featured_image | image_url: width: 300 | image_tag: loading: 'lazy', alt: '' }}
+            {%- else -%}
+              {{ 'collection-1' | placeholder_svg_tag: 'placeholder' }}
+            {%- endif -%}
+          </span>
+          {{ c.title }}
+        </a>
+      {%- endunless -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Lista de categorias", "settings": [] }
+{% endschema %}

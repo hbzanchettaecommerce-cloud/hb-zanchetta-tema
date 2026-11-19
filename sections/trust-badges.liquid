@@ -1,0 +1,54 @@
+{%- if section.blocks.size > 0 -%}
+<section class="trust">
+  <div class="wrap">
+    <div class="trust-row" style="--cols: {{ section.blocks.size }};">
+      {%- for block in section.blocks -%}
+        <div class="trust-item" {{ block.shopify_attributes }}>
+          <div class="trust-ico">{% render 'icon', name: block.settings.icon, size: 24 %}</div>
+          <div><strong>{{ block.settings.title }}</strong><span>{{ block.settings.text }}</span></div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Selos de confiança",
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Selo",
+      "settings": [
+        {
+          "type": "select", "id": "icon", "label": "Ícone", "default": "truck",
+          "options": [
+            { "value": "truck", "label": "Caminhão (entrega)" },
+            { "value": "shield", "label": "Escudo (segurança)" },
+            { "value": "pix", "label": "Pix" },
+            { "value": "card", "label": "Cartão" },
+            { "value": "box", "label": "Caixa" },
+            { "value": "chat", "label": "Conversa" },
+            { "value": "leaf", "label": "Folha (natural)" },
+            { "value": "return", "label": "Troca" }
+          ]
+        },
+        { "type": "text", "id": "title", "label": "Título", "default": "Entregamos em todo o Brasil" },
+        { "type": "text", "id": "text", "label": "Texto", "default": "Frete grátis acima de R$ 199" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Selos de confiança",
+      "blocks": [
+        { "type": "badge", "settings": { "icon": "truck", "title": "Entregamos em todo o Brasil", "text": "Frete grátis acima de R$ 199" } },
+        { "type": "badge", "settings": { "icon": "shield", "title": "Pagamento 100% seguro", "text": "Até 3x sem juros no cartão" } },
+        { "type": "badge", "settings": { "icon": "pix", "title": "5% de desconto no Pix", "text": "Aprovação na hora" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

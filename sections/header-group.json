@@ -1,0 +1,23 @@
+{
+  "type": "header",
+  "name": "Cabeçalho",
+  "sections": {
+    "announcement": {
+      "type": "announcement-bar",
+      "blocks": {
+        "msg1": { "type": "message", "settings": { "text": "<strong>10% off</strong> na primeira compra: cupom BEMVINDO10" } },
+        "msg2": { "type": "message", "settings": { "text": "Frete grátis acima de <strong>R$ 199</strong>" } },
+        "msg3": { "type": "message", "settings": { "text": "<strong>5% de desconto</strong> pagando no Pix" } },
+        "msg4": { "type": "message", "settings": { "text": "Entregamos para <strong>todo o Brasil</strong>" } },
+        "msg5": { "type": "message", "settings": { "text": "Parcele em até <strong>3x sem juros</strong>" } }
+      },
+      "block_order": ["msg1", "msg2", "msg3", "msg4", "msg5"],
+      "settings": { "speed": 40 }
+    },
+    "header": {
+      "type": "header",
+      "settings": {}
+    }
+  },
+  "order": ["announcement", "header"]
+}

@@ -1,0 +1,104 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-slider",
+      "blocks": {
+        "slide1": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "Direto da lavoura",
+            "heading": "Amendoim <em>de verdade</em> do campo pra sua mesa",
+            "text": "Torra artesanal, sem conservantes. Colhido e embalado pela família Zanchetta.",
+            "button_label": "Comprar agora",
+            "bg": "#223CA3",
+            "text_style": "light"
+          }
+        },
+        "slide2": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "Black November",
+            "heading": "Até <em>30% off</em> em toda a linha de pastas",
+            "text": "Pasta de amendoim integral, com cacau e com mel.",
+            "button_label": "Garantir desconto",
+            "bg": "#F4CA00",
+            "text_style": "dark"
+          }
+        },
+        "slide3": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "Frete grátis",
+            "heading": "Frete grátis <em>acima de R$ 199</em> para todo o Brasil",
+            "text": "Monte seu pedido com os sabores da casa e receba em casa.",
+            "button_label": "Ver produtos",
+            "bg": "#9A6526",
+            "text_style": "light"
+          }
+        }
+      },
+      "block_order": ["slide1", "slide2", "slide3"],
+      "settings": { "autoplay": true, "speed": 6 }
+    },
+    "trust": {
+      "type": "trust-badges",
+      "blocks": {
+        "b1": { "type": "badge", "settings": { "icon": "truck", "title": "Entregamos em todo o Brasil", "text": "Frete grátis acima de R$ 199" } },
+        "b2": { "type": "badge", "settings": { "icon": "shield", "title": "Pagamento 100% seguro", "text": "Até 3x sem juros no cartão" } },
+        "b3": { "type": "badge", "settings": { "icon": "pix", "title": "5% de desconto no Pix", "text": "Aprovação na hora" } }
+      },
+      "block_order": ["b1", "b2", "b3"],
+      "settings": {}
+    },
+    "promos": {
+      "type": "promo-banners",
+      "blocks": {
+        "p1": { "type": "promo", "settings": { "tag": "Mais pedido", "heading": "Amendoim <em>japonês</em>", "text": "Crocante, temperado e na medida.", "button_label": "Comprar", "bg": "#223CA3" } },
+        "p2": { "type": "promo", "settings": { "tag": "Até 30% off", "heading": "Pastas de <em>amendoim</em>", "text": "Integral, cacau e mel.", "button_label": "Comprar", "bg": "#9A6526" } },
+        "p3": { "type": "promo", "settings": { "tag": "Para festas", "heading": "Kits & <em>paçocas</em>", "text": "Displays e kits para presentear.", "button_label": "Comprar", "bg": "#131D52" } }
+      },
+      "block_order": ["p1", "p2", "p3"],
+      "settings": {}
+    },
+    "categories": {
+      "type": "category-circles",
+      "blocks": {
+        "c1": { "type": "category", "settings": { "label": "Torrado" } },
+        "c2": { "type": "category", "settings": { "label": "Japonês" } },
+        "c3": { "type": "category", "settings": { "label": "Crocante" } },
+        "c4": { "type": "category", "settings": { "label": "Pastas" } },
+        "c5": { "type": "category", "settings": { "label": "Doces & Paçoca" } },
+        "c6": { "type": "category", "settings": { "label": "Kits" } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4", "c5", "c6"],
+      "settings": {}
+    },
+    "bestsellers": {
+      "type": "featured-collection",
+      "settings": { "title": "Mais vendidos", "limit": 10 }
+    },
+    "new": {
+      "type": "featured-collection",
+      "settings": { "title": "Lançamentos", "limit": 10 }
+    },
+    "wholesale": {
+      "type": "wide-banner",
+      "settings": {}
+    },
+    "offers": {
+      "type": "featured-collection",
+      "settings": { "title": "Ofertas da semana", "limit": 10 }
+    },
+    "reviews": {
+      "type": "testimonials",
+      "blocks": {
+        "r1": { "type": "review", "settings": { "text": "O japonês é viciante, chegou super bem embalado e fresquinho. Já é o terceiro pedido.", "name": "Mariana C.", "city": "Ribeirão Preto/SP", "rating": 5 } },
+        "r2": { "type": "review", "settings": { "text": "Pasta integral sem açúcar e com sabor forte de amendoim torrado. Melhor que as de mercado.", "name": "Rafael L.", "city": "Curitiba/PR", "rating": 5 } },
+        "r3": { "type": "review", "settings": { "text": "Comprei o kit para a festa junina da escola e foi sucesso. Entrega rápida para BH.", "name": "Juliana S.", "city": "Belo Horizonte/MG", "rating": 4 } }
+      },
+      "block_order": ["r1", "r2", "r3"],
+      "settings": {}
+    }
+  },
+  "order": ["hero", "trust", "promos", "categories", "bestsellers", "new", "wholesale", "offers", "reviews"]
+}
