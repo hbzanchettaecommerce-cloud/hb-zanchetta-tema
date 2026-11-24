@@ -34,6 +34,8 @@
               <div class="slide-side">
                 {%- if block.settings.image_side != blank -%}
                   {{ block.settings.image_side | image_url: width: 900 | image_tag: widths: '450,700,900', sizes: '(min-width: 820px) 50vw, 90vw', alt: '', loading: loading }}
+                {%- else -%}
+                  {% render 'mascot', name: block.settings.mascot, class: 'mascot', loading: loading %}
                 {%- endif -%}
               </div>
             </div>
@@ -70,7 +72,22 @@
         { "type": "inline_richtext", "id": "heading", "label": "Título", "default": "Amendoim <em>de verdade</em> do campo pra sua mesa", "info": "Use itálico para destacar uma palavra." },
         { "type": "text", "id": "text", "label": "Texto", "default": "Torra artesanal, sem conservantes. Colhido e embalado pela família Zanchetta." },
         { "type": "text", "id": "button_label", "label": "Texto do botão", "default": "Comprar agora" },
-        { "type": "image_picker", "id": "image_side", "label": "Foto do produto (PNG sem fundo)" },
+        {
+          "type": "select", "id": "mascot", "label": "Mascote ao lado do texto", "default": "apontando",
+          "options": [
+            { "value": "none", "label": "Nenhum" },
+            { "value": "apontando", "label": "Apontando para a câmera" },
+            { "value": "mostrando", "label": "Mostrando com a mão aberta" },
+            { "value": "comemorando", "label": "Comemorando" },
+            { "value": "entregador", "label": "Entregador com caixa" },
+            { "value": "joinha", "label": "Fazendo joinha" },
+            { "value": "bracos-cruzados", "label": "Braços cruzados, piscando" },
+            { "value": "maos-na-cintura", "label": "Mãos na cintura" },
+            { "value": "prancheta", "label": "Anotando na prancheta" },
+            { "value": "notebook", "label": "Com notebook" }
+          ]
+        },
+        { "type": "image_picker", "id": "image_side", "label": "Ou uma foto de produto (PNG sem fundo)", "info": "Se escolher uma foto, ela aparece no lugar do mascote." },
         { "type": "color", "id": "bg", "label": "Cor de fundo", "default": "#223CA3" },
         { "type": "select", "id": "text_style", "label": "Cor do texto", "options": [{ "value": "light", "label": "Branco" }, { "value": "dark", "label": "Azul escuro" }], "default": "light" }
       ]

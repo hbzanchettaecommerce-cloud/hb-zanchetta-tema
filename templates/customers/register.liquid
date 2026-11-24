@@ -1,5 +1,6 @@
 <div class="wrap">
   <div class="auth">
+    {% render 'mascot', name: 'comemorando', class: 'mascot auth-mascot' %}
     <h1 class="disp">Criar conta</h1>
     {%- form 'create_customer' -%}
       {%- if form.errors -%}<div class="form-error">{{ form.errors | default_errors }}</div>{%- endif -%}

@@ -98,6 +98,7 @@
         </div>
       {%- else -%}
         <div class="empty">
+          {% render 'mascot', name: 'maos-na-cintura', class: 'mascot' %}
           <h2>Nenhum produto encontrado</h2>
           <p>Tente remover algum filtro ou veja todos os produtos.</p>
           <a class="btn btn-b" href="{{ collection.url }}">Limpar filtros</a>

@@ -18,6 +18,7 @@
     </div>
 
     <div class="login-box" id="login">
+      {% render 'mascot', name: 'joinha', class: 'mascot auth-mascot' %}
       <h1 class="disp">Entrar</h1>
       {%- form 'customer_login' -%}
         {%- if form.errors -%}<div class="form-error">{{ form.errors | default_errors }}</div>{%- endif -%}

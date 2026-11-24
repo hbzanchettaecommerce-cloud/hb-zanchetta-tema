@@ -21,11 +21,18 @@
           -%}
           <div class="ship-bar">
             {%- if remaining > 0 -%}
-              Faltam <b>{{ remaining | money }}</b> para você ganhar <b>frete grátis</b>.
+              {% render 'mascot', name: 'entregador', class: 'ship-mascot' %}
             {%- else -%}
-              Parabéns! Seu pedido tem <b>frete grátis</b>.
+              {% render 'mascot', name: 'comemorando', class: 'ship-mascot' %}
             {%- endif -%}
-            <div class="ship-track" aria-hidden="true"><span style="width: {{ pct }}%;"></span></div>
+            <div class="ship-bar-text">
+              {%- if remaining > 0 -%}
+                Faltam <b>{{ remaining | money }}</b> para você ganhar <b>frete grátis</b>.
+              {%- else -%}
+                Oba! Seu pedido tem <b>frete grátis</b>.
+              {%- endif -%}
+              <div class="ship-track" aria-hidden="true"><span style="width: {{ pct }}%;"></span></div>
+            </div>
           </div>
         {%- endif -%}
 
@@ -103,6 +110,7 @@
     </form>
   {%- else -%}
     <div class="empty">
+      {% render 'mascot', name: 'mostrando', class: 'mascot' %}
       <h2>Seu carrinho está vazio</h2>
       <p>Que tal dar uma olhada nos mais vendidos?</p>
       <a class="btn btn-y" href="{{ routes.all_products_collection_url }}">Ver produtos</a>

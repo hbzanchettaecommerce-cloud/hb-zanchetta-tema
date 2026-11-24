@@ -22,6 +22,8 @@
         <div class="wide-side">
           {%- if section.settings.image_side != blank -%}
             {{ section.settings.image_side | image_url: width: 900 | image_tag: loading: 'lazy', alt: '' }}
+          {%- else -%}
+            {% render 'mascot', name: section.settings.mascot, class: 'mascot' %}
           {%- endif -%}
         </div>
       </div>
@@ -41,7 +43,22 @@
     { "type": "inline_richtext", "id": "heading", "label": "Título", "default": "Compre no <em>atacado</em> e revenda HB Zanchetta" },
     { "type": "text", "id": "text", "label": "Texto", "default": "Condições especiais para mercados, empórios e lojas de conveniência." },
     { "type": "text", "id": "button_label", "label": "Botão", "default": "Quero ser revendedor" },
-    { "type": "image_picker", "id": "image_side", "label": "Foto ao lado" },
+    {
+      "type": "select", "id": "mascot", "label": "Mascote ao lado", "default": "prancheta",
+      "options": [
+        { "value": "none", "label": "Nenhum" },
+        { "value": "prancheta", "label": "Anotando na prancheta" },
+        { "value": "entregador", "label": "Entregador com caixa" },
+        { "value": "bracos-cruzados", "label": "Braços cruzados, piscando" },
+        { "value": "maos-na-cintura", "label": "Mãos na cintura" },
+        { "value": "joinha", "label": "Fazendo joinha" },
+        { "value": "mostrando", "label": "Mostrando com a mão aberta" },
+        { "value": "apontando", "label": "Apontando para a câmera" },
+        { "value": "comemorando", "label": "Comemorando" },
+        { "value": "notebook", "label": "Com notebook" }
+      ]
+    },
+    { "type": "image_picker", "id": "image_side", "label": "Ou uma foto ao lado", "info": "Se escolher uma foto, ela aparece no lugar do mascote." },
     { "type": "color", "id": "bg", "label": "Cor de fundo", "default": "#F4CA00" }
   ],
   "presets": [{ "name": "Banner largo" }]

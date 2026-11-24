@@ -28,6 +28,7 @@
     {%- endpaginate -%}
   </div>
   <aside class="box">
+    {% render 'mascot', name: 'prancheta', class: 'mascot box-mascot' %}
     <h2>Meus dados</h2>
     <div>{{ customer.name }}</div>
     <div>{{ customer.email }}</div>

@@ -1,6 +1,9 @@
 <section class="news">
   <div class="wrap news-in">
-    <div>
+    {%- if section.settings.mascot != 'none' -%}
+      <div class="news-mascot">{% render 'mascot', name: section.settings.mascot, class: 'mascot' %}</div>
+    {%- endif -%}
+    <div class="news-copy">
       <h3 class="disp">{{ section.settings.heading }}</h3>
       {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
     </div>
@@ -24,7 +27,18 @@
     { "type": "inline_richtext", "id": "heading", "label": "Título", "default": "Ganhe <em>10% off</em> na primeira compra" },
     { "type": "text", "id": "text", "label": "Texto", "default": "Cadastre seu e-mail e receba o cupom e as novidades da HB Zanchetta." },
     { "type": "text", "id": "button_label", "label": "Botão", "default": "Quero o cupom" },
-    { "type": "text", "id": "success", "label": "Mensagem de sucesso", "default": "Pronto! Confira seu e-mail." }
+    { "type": "text", "id": "success", "label": "Mensagem de sucesso", "default": "Pronto! Confira seu e-mail." },
+    {
+      "type": "select", "id": "mascot", "label": "Mascote", "default": "notebook",
+      "options": [
+        { "value": "none", "label": "Nenhum" },
+        { "value": "notebook", "label": "Com notebook" },
+        { "value": "joinha", "label": "Fazendo joinha" },
+        { "value": "comemorando", "label": "Comemorando" },
+        { "value": "mostrando", "label": "Mostrando com a mão aberta" },
+        { "value": "bracos-cruzados", "label": "Braços cruzados, piscando" }
+      ]
+    }
   ],
   "presets": [{ "name": "Newsletter" }]
 }

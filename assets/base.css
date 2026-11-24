@@ -396,6 +396,26 @@ input, select, textarea { font: inherit; color: inherit; }
 .toast b { color: var(--yellow); }
 .toast a { color: var(--yellow); text-decoration: underline; margin-left: 6px; white-space: nowrap; }
 
+/* Mascote */
+.mascot { width: auto; height: auto; filter: drop-shadow(0 14px 18px rgba(19,29,82,.22)); }
+.slide-side .mascot { max-height: 400px; transform-origin: bottom center; animation: hb-hello .9s ease-out both; }
+.slide.on .slide-side .mascot { animation: hb-hello .9s ease-out both; }
+@keyframes hb-hello { from { opacity: 0; transform: translateY(24px) scale(.94); } to { opacity: 1; transform: none; } }
+.wide-side { display: flex; justify-content: center; align-items: flex-end; padding-top: 20px; }
+.wide-side .mascot { max-height: 320px; margin-bottom: -6px; }
+.news-in { align-items: flex-end; }
+.news-mascot { flex: none; align-self: flex-end; margin-top: -70px; margin-bottom: -28px; }
+.news-mascot .mascot { height: 190px; }
+.news-copy { flex: 1; min-width: 220px; align-self: center; }
+.empty .mascot { height: 220px; margin: 0 auto 6px; }
+.not-found .mascot { height: 240px; margin: 0 auto 8px; }
+.auth-mascot { height: 150px; margin: 0 auto; }
+.box-mascot { height: 120px; margin: -8px auto 0; }
+.ship-bar { display: flex; align-items: center; gap: 14px; }
+.ship-bar-text { flex: 1; min-width: 0; }
+.ship-mascot { height: 64px; width: auto; flex: none; filter: none; }
+.toast img { display: inline-block; height: 40px; width: auto; vertical-align: middle; margin: -12px 8px -10px -6px; }
+
 /* Responsivo */
 @media (max-width: 1024px) {
   .rail { grid-auto-columns: calc((100% - 2 * 16px) / 3); }
@@ -422,7 +442,10 @@ input, select, textarea { font: inherit; color: inherit; }
   .slide-text { grid-template-columns: 1fr; min-height: 0; }
   .slide-copy { padding: 30px 22px 40px; }
   .slide-side { padding-top: 0; }
-  .slide-side img { max-height: 220px; }
+  .slide-side img, .slide-side .mascot { max-height: 230px; }
+  .wide-side .mascot { max-height: 240px; }
+  .news-mascot { margin-top: -50px; margin-bottom: 0; }
+  .news-mascot .mascot { height: 140px; }
   .trust-row { grid-template-columns: 1fr; }
   .trust-item { justify-content: flex-start; padding: 14px 18px; }
   .trust-item + .trust-item { border-left: 0; border-top: 1px dashed var(--line); }

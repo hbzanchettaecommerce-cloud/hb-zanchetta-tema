@@ -13,6 +13,7 @@
   {%- if search.performed -%}
     {%- if search.results_count == 0 -%}
       <div class="empty">
+        {% render 'mascot', name: 'maos-na-cintura', class: 'mascot' %}
         <h2>Nada encontrado</h2>
         <p>Confira a ortografia ou tente uma palavra mais simples, como “japonês” ou “pasta”.</p>
         <a class="btn btn-y" href="{{ routes.all_products_collection_url }}">Ver todos os produtos</a>

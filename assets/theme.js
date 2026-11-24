@@ -10,10 +10,10 @@
 
   /* Aviso flutuante */
   let toastTimer;
-  function toast(html) {
+  function toast(html, happy) {
     const t = $('#toast');
     if (!t) return;
-    t.innerHTML = html;
+    t.innerHTML = (happy && HB.mascotMini ? `<img src="${HB.mascotMini}" alt="" width="30" height="40">` : '') + html;
     t.classList.add('on');
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => t.classList.remove('on'), 3500);
@@ -69,7 +69,7 @@
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.description || data.message || 'Não foi possível adicionar este produto.');
-      toast(`Adicionado ao carrinho: <b>${data.quantity}× ${esc(data.product_title)}</b><a href="${HB.routes.cart}">Ver carrinho</a>`);
+      toast(`Adicionado ao carrinho: <b>${data.quantity}× ${esc(data.product_title)}</b><a href="${HB.routes.cart}">Ver carrinho</a>`, true);
       refreshCart();
     } catch (err) {
       toast(esc(err.message));

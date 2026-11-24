@@ -70,6 +70,7 @@
       pix: {{ settings.pix_discount | default: 0 }},
       instMax: {{ settings.installments_max | default: 1 }},
       instMin: {{ settings.installment_min | default: 10 }},
+      mascotMini: {{ 'mascote-joinha-mini.png' | asset_url | json }},
       routes: {
         root: {{ routes.root_url | json }},
         cart: {{ routes.cart_url | json }},

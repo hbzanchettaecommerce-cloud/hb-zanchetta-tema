@@ -10,6 +10,7 @@
             "heading": "Amendoim <em>de verdade</em> do campo pra sua mesa",
             "text": "Torra artesanal, sem conservantes. Colhido e embalado pela família Zanchetta.",
             "button_label": "Comprar agora",
+            "mascot": "apontando",
             "bg": "#223CA3",
             "text_style": "light"
           }
@@ -21,6 +22,7 @@
             "heading": "Até <em>30% off</em> em toda a linha de pastas",
             "text": "Pasta de amendoim integral, com cacau e com mel.",
             "button_label": "Garantir desconto",
+            "mascot": "comemorando",
             "bg": "#F4CA00",
             "text_style": "dark"
           }
@@ -32,7 +34,8 @@
             "heading": "Frete grátis <em>acima de R$ 199</em> para todo o Brasil",
             "text": "Monte seu pedido com os sabores da casa e receba em casa.",
             "button_label": "Ver produtos",
-            "bg": "#9A6526",
+            "mascot": "entregador",
+            "bg": "#223CA3",
             "text_style": "light"
           }
         }
