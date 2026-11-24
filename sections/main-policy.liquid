@@ -1,0 +1,67 @@
+{%- liquid
+  assign email = section.settings.email | default: shop.email
+  assign phone_digits = section.settings.phone | remove: ' ' | remove: '(' | remove: ')' | remove: '-'
+-%}
+<div class="wrap policy">
+  <nav class="crumbs" aria-label="Você está em">
+    <a href="{{ routes.root_url }}">Início</a> / <span>{{ section.settings.menu_title }}</span> / <span>{{ page.title }}</span>
+  </nav>
+
+  <div class="policy-grid">
+    {%- if section.settings.menu != blank -%}
+      <aside class="policy-nav" aria-label="{{ section.settings.menu_title | escape }}">
+        <h2 class="disp">{{ section.settings.menu_title }}</h2>
+        <ul>
+          {%- for link in section.settings.menu.links -%}
+            <li><a href="{{ link.url }}" class="{% if link.current %}on{% endif %}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </aside>
+    {%- endif -%}
+
+    <article class="policy-main">
+      <h1 class="disp">{{ page.title }}</h1>
+      <p class="policy-updated">Atualizado em {{ page.published_at | date: '%d/%m/%Y' }}</p>
+      <div class="rte policy-body">{{ page.content }}</div>
+
+      <div class="policy-contact">
+        {% render 'mascot', name: section.settings.mascot, class: 'mascot' %}
+        <div>
+          <h2 class="disp">{{ section.settings.contact_title }}</h2>
+          <p>{{ section.settings.contact_text }}</p>
+          <ul>
+            {%- if email != blank -%}<li><strong>E-mail:</strong> <a href="mailto:{{ email }}">{{ email }}</a></li>{%- endif -%}
+            {%- if section.settings.phone != blank -%}<li><strong>Telefone:</strong> <a href="tel:+55{{ phone_digits }}">{{ section.settings.phone }}</a></li>{%- endif -%}
+            {%- if section.settings.hours != blank -%}<li><strong>Horário:</strong> {{ section.settings.hours }}</li>{%- endif -%}
+          </ul>
+        </div>
+      </div>
+    </article>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Página de política",
+  "settings": [
+    { "type": "text", "id": "menu_title", "label": "Título do menu lateral", "default": "Políticas" },
+    { "type": "link_list", "id": "menu", "label": "Menu lateral", "info": "Use o mesmo menu da coluna Políticas do rodapé." },
+    { "type": "header", "content": "Caixa de contato" },
+    { "type": "text", "id": "contact_title", "label": "Título", "default": "Ficou com alguma dúvida?" },
+    { "type": "text", "id": "contact_text", "label": "Texto", "default": "Fale com a gente. Respondemos em horário comercial." },
+    { "type": "text", "id": "email", "label": "E-mail", "default": "loja@hbzanchetta.com", "info": "Se ficar vazio, usa o e-mail da loja." },
+    { "type": "text", "id": "phone", "label": "Telefone", "default": "(16) 3266-1170" },
+    { "type": "text", "id": "hours", "label": "Horário", "default": "Seg. a sex., 8h às 18h" },
+    {
+      "type": "select", "id": "mascot", "label": "Mascote", "default": "notebook",
+      "options": [
+        { "value": "none", "label": "Nenhum" },
+        { "value": "notebook", "label": "Com notebook" },
+        { "value": "prancheta", "label": "Anotando na prancheta" },
+        { "value": "joinha", "label": "Fazendo joinha" },
+        { "value": "mostrando", "label": "Mostrando com a mão aberta" }
+      ]
+    }
+  ]
+}
+{% endschema %}

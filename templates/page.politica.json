@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-policy",
+      "settings": {
+        "menu_title": "Políticas",
+        "menu": "politicas",
+        "contact_title": "Ficou com alguma dúvida?",
+        "contact_text": "Fale com a gente. Respondemos em horário comercial.",
+        "email": "loja@hbzanchetta.com",
+        "phone": "(16) 3266-1170",
+        "hours": "Seg. a sex., 8h às 18h",
+        "mascot": "notebook"
+      }
+    }
+  },
+  "order": ["main"]
+}
