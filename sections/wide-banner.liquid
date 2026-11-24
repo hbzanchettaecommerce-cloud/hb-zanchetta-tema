@@ -1,4 +1,16 @@
-<section class="wide">
+{%- liquid
+  assign bg_url = blank
+  if section.settings.bg_image != blank
+    assign bg_url = section.settings.bg_image | image_url: width: 2000
+  elsif section.settings.use_theme_bg
+    assign bg_url = 'atacado-bg.jpg' | asset_url
+  endif
+  assign has_mascot = false
+  if section.settings.image_side == blank and section.settings.mascot != 'none'
+    assign has_mascot = true
+  endif
+-%}
+<section class="wide{% if has_mascot %} wide-has-mascot{% endif %}">
   <div class="wrap">
     {%- if section.settings.image != blank -%}
       {%- assign img_alt = section.settings.heading | strip_html | escape -%}
@@ -11,7 +23,7 @@
         </picture>
       </a>
     {%- else -%}
-      <div class="wide-box" style="--wide-bg: {{ section.settings.bg }};">
+      <div class="wide-box{% if bg_url != blank %} has-bg{% endif %}" style="--wide-bg: {{ section.settings.bg }};{% if bg_url != blank %} --wide-img: url('{{ bg_url }}');{% endif %}">
         <div class="wide-copy">
           <h2 class="disp">{{ section.settings.heading }}</h2>
           {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
@@ -19,13 +31,11 @@
             <a class="btn btn-b" href="{{ section.settings.link | default: '#' }}">{{ section.settings.button_label }} →</a>
           {%- endif -%}
         </div>
-        <div class="wide-side">
-          {%- if section.settings.image_side != blank -%}
-            {{ section.settings.image_side | image_url: width: 900 | image_tag: loading: 'lazy', alt: '' }}
-          {%- else -%}
-            {% render 'mascot', name: section.settings.mascot, class: 'mascot' %}
-          {%- endif -%}
-        </div>
+        {%- if section.settings.image_side != blank -%}
+          <div class="wide-side">{{ section.settings.image_side | image_url: width: 900 | image_tag: loading: 'lazy', alt: '' }}</div>
+        {%- elsif has_mascot -%}
+          <div class="wide-mascot">{% render 'mascot', name: section.settings.mascot, class: 'mascot' %}</div>
+        {%- endif -%}
       </div>
     {%- endif -%}
   </div>
@@ -35,16 +45,19 @@
 {
   "name": "Banner largo",
   "settings": [
-    { "type": "paragraph", "content": "Com imagem: mostra só a arte. Sem imagem: mostra o texto sobre a cor de fundo." },
-    { "type": "image_picker", "id": "image", "label": "Imagem desktop", "info": "1920 x 500 px" },
-    { "type": "image_picker", "id": "image_mobile", "label": "Imagem celular", "info": "800 x 800 px" },
+    { "type": "paragraph", "content": "Com imagem desktop: mostra só a arte. Sem ela: mostra o texto sobre o fundo, com o mascote saindo pela parte de cima." },
+    { "type": "image_picker", "id": "image", "label": "Arte completa desktop", "info": "1920 x 500 px. Substitui todo o bloco." },
+    { "type": "image_picker", "id": "image_mobile", "label": "Arte completa celular", "info": "800 x 800 px" },
     { "type": "url", "id": "link", "label": "Link" },
     { "type": "header", "content": "Banner de texto" },
     { "type": "inline_richtext", "id": "heading", "label": "Título", "default": "Compre no <em>atacado</em> e revenda HB Zanchetta" },
     { "type": "text", "id": "text", "label": "Texto", "default": "Condições especiais para mercados, empórios e lojas de conveniência." },
     { "type": "text", "id": "button_label", "label": "Botão", "default": "Quero ser revendedor" },
+    { "type": "image_picker", "id": "bg_image", "label": "Imagem de fundo", "info": "2000 x 670 px, com espaço livre à esquerda e em cima para o texto." },
+    { "type": "checkbox", "id": "use_theme_bg", "label": "Usar o fundo de atacado do tema quando não houver imagem de fundo", "default": true },
+    { "type": "color", "id": "bg", "label": "Cor de fundo", "default": "#FBC401" },
     {
-      "type": "select", "id": "mascot", "label": "Mascote ao lado", "default": "prancheta",
+      "type": "select", "id": "mascot", "label": "Mascote", "default": "prancheta",
       "options": [
         { "value": "none", "label": "Nenhum" },
         { "value": "prancheta", "label": "Anotando na prancheta" },
@@ -58,8 +71,7 @@
         { "value": "notebook", "label": "Com notebook" }
       ]
     },
-    { "type": "image_picker", "id": "image_side", "label": "Ou uma foto ao lado", "info": "Se escolher uma foto, ela aparece no lugar do mascote." },
-    { "type": "color", "id": "bg", "label": "Cor de fundo", "default": "#F4CA00" }
+    { "type": "image_picker", "id": "image_side", "label": "Ou uma foto no lugar do mascote" }
   ],
   "presets": [{ "name": "Banner largo" }]
 }

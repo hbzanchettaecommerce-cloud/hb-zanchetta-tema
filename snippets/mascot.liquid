@@ -10,6 +10,8 @@
     assign h = 540
     if name == 'apontando' or name == 'bracos-cruzados' or name == 'comemorando'
       assign w = 540
+    elsif name == 'duvida'
+      assign w = 720
     endif
   -%}
   <img class="{{ class | default: 'mascot' }}" src="{{ 'mascote-' | append: name | append: '.png' | asset_url }}" alt="" width="{{ w }}" height="{{ h }}" loading="{{ loading | default: 'lazy' }}" decoding="async">

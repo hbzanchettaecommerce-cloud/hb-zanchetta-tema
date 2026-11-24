@@ -1,0 +1,62 @@
+{
+  "sections": {
+    "hero": {
+      "type": "about-hero",
+      "settings": {
+        "eyebrow": "Nossa história",
+        "heading": "Da lavoura de <em>Borborema</em> para a mesa de todo o Brasil",
+        "text": "Há mais de 20 anos a HB Zanchetta seleciona, beneficia e entrega amendoim com um padrão de qualidade reconhecido no Brasil e no exterior."
+      }
+    },
+    "story": {
+      "type": "about-story",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "number": "+20 anos", "label": "no mercado de amendoim" } },
+        "s2": { "type": "stat", "settings": { "number": "8+ países", "label": "recebem o amendoim HB Zanchetta" } },
+        "s3": { "type": "stat", "settings": { "number": "Borborema/SP", "label": "onde fica a nossa fábrica" } }
+      },
+      "block_order": ["s1", "s2", "s3"],
+      "settings": {
+        "heading": "Uma empresa familiar que cresceu junto com o <em>amendoim</em>",
+        "text": "<p>Tudo começou nos anos 90, quando Humberto Bachi Zanchetta, o Beto Zanchetta, viu no amendoim um alimento essencial e passou a incentivar os produtores da região a apostar na cultura. A empresa nasceu comprando e vendendo o grão.</p><p>Com investimento constante em tecnologia e na melhoria dos processos, a HB Zanchetta ampliou a linha de produção e estreitou a parceria com grandes produtores. Esse cuidado em cada etapa garante segurança e qualidade alimentar e fez da marca uma referência no setor, sem perder a essência de empresa familiar.</p>",
+        "mascot": "bracos-cruzados"
+      }
+    },
+    "timeline": {
+      "type": "about-timeline",
+      "blocks": {
+        "t1999": { "type": "milestone", "settings": { "year": "1999", "text": "Início da atuação no mercado de amendoim" } },
+        "t2000": { "type": "milestone", "settings": { "year": "2000", "text": "Primeiras parcerias com produtores" } },
+        "t2001": { "type": "milestone", "settings": { "year": "2001", "text": "Investimento em infraestrutura e tecnologia" } },
+        "t2004": { "type": "milestone", "settings": { "year": "2004", "text": "Ampliação das instalações e da produção" } },
+        "t2005": { "type": "milestone", "settings": { "year": "2005", "text": "Novos processos de segurança alimentar" } },
+        "t2007": { "type": "milestone", "settings": { "year": "2007", "text": "Consolidação no mercado nacional" } },
+        "t2021": { "type": "milestone", "settings": { "year": "2021", "text": "Expansão para o mercado internacional" } }
+      },
+      "block_order": ["t1999", "t2000", "t2001", "t2004", "t2005", "t2007", "t2021"],
+      "settings": { "title": "Nossa trajetória" }
+    },
+    "world": {
+      "type": "about-world",
+      "settings": {
+        "heading": "Do interior de São Paulo <em>para o mundo</em>",
+        "text": "Além de abastecer o mercado brasileiro, a HB Zanchetta exporta para diversos países, seguindo padrões internacionais de qualidade e segurança alimentar. Entre eles:",
+        "countries": "África do Sul, Argélia, Colômbia, Índia, Israel, México, Rússia, Ucrânia",
+        "mascot": "entregador"
+      }
+    },
+    "cta": {
+      "type": "wide-banner",
+      "settings": {
+        "heading": "Amendoim: <em>a energia</em> que te move!",
+        "text": "Conheça a linha HB Zanchetta e receba em casa, em qualquer lugar do Brasil.",
+        "button_label": "Ver produtos",
+        "link": "shopify://collections/all",
+        "use_theme_bg": false,
+        "bg": "#F4CA00",
+        "mascot": "comemorando"
+      }
+    }
+  },
+  "order": ["hero", "story", "timeline", "world", "cta"]
+}

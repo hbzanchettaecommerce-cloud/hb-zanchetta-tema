@@ -1,0 +1,42 @@
+{%- assign countries = section.settings.countries | split: ',' -%}
+<section class="about-world">
+  <div class="wrap">
+    <div class="about-world-box">
+      <div class="about-world-copy">
+        <h2 class="disp">{{ section.settings.heading }}</h2>
+        {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
+        <ul class="country-list">
+          {%- for c in countries -%}
+            {%- assign name = c | strip -%}
+            {%- if name != blank -%}<li>{{ name }}</li>{%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+      {%- if section.settings.mascot != 'none' -%}
+        <div class="about-world-mascot">{% render 'mascot', name: section.settings.mascot, class: 'mascot' %}</div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Quem somos: exportação",
+  "settings": [
+    { "type": "inline_richtext", "id": "heading", "label": "Título", "default": "Do interior de São Paulo <em>para o mundo</em>" },
+    { "type": "textarea", "id": "text", "label": "Texto" },
+    { "type": "text", "id": "countries", "label": "Países (separados por vírgula)", "default": "África do Sul, Argélia, Colômbia, Índia, Israel, México, Rússia, Ucrânia" },
+    {
+      "type": "select", "id": "mascot", "label": "Mascote", "default": "entregador",
+      "options": [
+        { "value": "none", "label": "Nenhum" },
+        { "value": "entregador", "label": "Entregador com caixa" },
+        { "value": "mostrando", "label": "Mostrando com a mão aberta" },
+        { "value": "joinha", "label": "Fazendo joinha" },
+        { "value": "apontando", "label": "Apontando para a câmera" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Quem somos: exportação" }]
+}
+{% endschema %}

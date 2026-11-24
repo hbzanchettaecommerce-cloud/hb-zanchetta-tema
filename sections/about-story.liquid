@@ -1,0 +1,52 @@
+<section class="about-story">
+  <div class="wrap about-story-grid">
+    <div class="about-story-text">
+      <h2 class="disp">{{ section.settings.heading }}</h2>
+      <div class="rte">{{ section.settings.text }}</div>
+    </div>
+    <div class="about-stats">
+      {%- for block in section.blocks -%}
+        <div class="stat" {{ block.shopify_attributes }}>
+          <strong>{{ block.settings.number }}</strong>
+          <span>{{ block.settings.label }}</span>
+        </div>
+      {%- endfor -%}
+      {%- if section.settings.mascot != 'none' -%}
+        <div class="about-story-mascot">{% render 'mascot', name: section.settings.mascot, class: 'mascot' %}</div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Quem somos: história",
+  "settings": [
+    { "type": "inline_richtext", "id": "heading", "label": "Título", "default": "Uma empresa familiar que cresceu junto com o <em>amendoim</em>" },
+    { "type": "richtext", "id": "text", "label": "Texto" },
+    {
+      "type": "select", "id": "mascot", "label": "Mascote", "default": "bracos-cruzados",
+      "options": [
+        { "value": "none", "label": "Nenhum" },
+        { "value": "bracos-cruzados", "label": "Braços cruzados, piscando" },
+        { "value": "maos-na-cintura", "label": "Mãos na cintura" },
+        { "value": "joinha", "label": "Fazendo joinha" },
+        { "value": "mostrando", "label": "Mostrando com a mão aberta" },
+        { "value": "prancheta", "label": "Anotando na prancheta" }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Número em destaque",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Número", "default": "+20 anos" },
+        { "type": "text", "id": "label", "label": "Descrição", "default": "no mercado de amendoim" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [{ "name": "Quem somos: história" }]
+}
+{% endschema %}
