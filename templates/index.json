@@ -15,7 +15,6 @@
         "slide1": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/mascote_infeliz_com_mao_na_cabeca_duvida.png",
             "alt": "",
             "link": "",
             "eyebrow": "Direto da lavoura",
@@ -51,7 +50,7 @@
             "text": "Monte seu pedido com os sabores da casa e receba em casa.",
             "button_label": "Ver produtos",
             "mascot": "entregador",
-            "bg": "#403DE1",
+            "bg": "#403de1",
             "text_style": "light"
           }
         }
