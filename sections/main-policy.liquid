@@ -7,7 +7,7 @@
     <a href="{{ routes.root_url }}">Início</a> / <span>{{ section.settings.menu_title }}</span> / <span>{{ page.title }}</span>
   </nav>
 
-  <div class="policy-grid">
+  <div class="policy-grid{% if section.settings.menu == blank %} no-nav{% endif %}">
     {%- if section.settings.menu != blank -%}
       <aside class="policy-nav" aria-label="{{ section.settings.menu_title | escape }}">
         <h2 class="disp">{{ section.settings.menu_title }}</h2>

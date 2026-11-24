@@ -429,6 +429,7 @@ input, select, textarea { font: inherit; color: inherit; }
 /* Páginas de política */
 .policy { padding-bottom: 56px; }
 .policy-grid { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 40px; align-items: start; padding-top: 10px; }
+.policy-grid.no-nav { grid-template-columns: minmax(0, 1fr); }
 .policy-nav { position: sticky; top: 150px; background: var(--cream); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; }
 .policy-nav h2 { font-size: 20px; margin: 0 0 12px; }
 .policy-nav ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
